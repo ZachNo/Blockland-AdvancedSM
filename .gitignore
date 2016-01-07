@@ -77,3 +77,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Ignore other things that don't matter
+BLBanManager/
+*.pro
