@@ -128,7 +128,7 @@ void MainWindow::openAbout()
 void MainWindow::openBLExec()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Select File"), "/", tr("*.exe"));
-    if(filename == tr(""))
+    if(filename == tr("")) //User hit cancel, ignore
         return;
     ui->blExec->setText(filename);
     basePathBuild();
@@ -222,7 +222,6 @@ void MainWindow::startServer()
     {
         if(server->state() == QProcess::Running)
             server->kill();
-        delete server;
     }
 
     //Create new server instance, start it with the selected .exe
@@ -363,6 +362,7 @@ void MainWindow::updateOutput()
         serverStarting = false;
     }
 
+    //Blockland doesn't output anything special for warn() or error() to console, so we emulate it partially by using some default phrases
     if(output.contains("): ") || output.contains("datablocks added.") || output.contains("will not execute"))
         output = tr("<font color=#777777>").append(output).append("</font>");
 
@@ -696,32 +696,24 @@ void MainWindow::defaultAddons()
     for(int i = 0; i < addonListModel->rowCount(); ++i)
     {
         QString txt = addonListModel->item(i)->text();
-        //Do lots of compares... idk how to do this more efficiently rn (Organized in categories just cause)
-        if(txt == "Bot_Blockhead" || txt == "Bot_Hole" || txt == "Bot_Horse" || txt == "Bot_Shark" || txt == "Bot_Zombie")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Brick_Arch" || txt == "Brick_Checkpoint" || txt == "Brick_Christmas_Tree" || txt == "Brick_Doors" || txt == "Brick_Halloween" || txt == "Brick_Large_Cubes" || txt == "Brick_Teledoor" || txt == "Brick_Treasure_Chest" || txt == "Brick_V15")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Emote_Alarm" || txt == "Emote_Confusion" || txt == "Emote_Hate" || txt == "Emote_Love")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Item_Key" || txt == "Item_Skis" || txt == "Item_Sports")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Light_Animated" || txt == "Light_Basic")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Particle_Basic" || txt == "Particle_FX_Cans" || txt == "Particle_Grass" || txt == "Particle_Player" || txt == "Particle_Tools")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Player_Fuel_Jet" || txt == "Player_Jump_Jet" || txt == "Player_Leap_Jet" || txt == "Player_No_Jet" || txt == "Player_Quake")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Print_1x2f_BLPRemote" || txt == "Print_1x2f_Default" || txt == "Print_2x2f_Default" || txt == "Print_2x2r_Default" || txt == "Print_Letters_Default")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Projectile_GravityRocket" || txt == "Projectile_Pinball" || txt == "Projectile_Pong" || txt == "Projectile_Radio_Wave")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Sound_Beeps" || txt == "Sound_Phone" || txt == "Sound_Synth4")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Support_Doors")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Vehicle_Ball" || txt == "Vehicle_Flying_Wheeled_Jeep" || txt == "Vehicle_Horse" || txt == "Vehicle_Jeep" || txt == "Vehicle_Magic_Carpet" || txt == "Vehicle_Pirate_Cannon" || txt == "Vehicle_Rowboat" || txt == "Vehicle_Tank")
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else if(txt == "Weapon_Bow" || txt == "Weapon_Gun" || txt == "Weapon_Guns_Akimbo" || txt == "Weapon_Horse_Ray" || txt == "Weapon_Push_Broom" || txt == "Weapon_Rocket_Launcher" || txt == "Weapon_Spear" || txt == "Weapon_Sword")
+        QStringList defaults; //Make a list of all the default add-ons...
+        defaults << "Bot_Blockhead" << "Bot_Hole" << "Bot_Horse" << "Bot_Shark" << "Bot_Zombie"
+                 << "Brick_Arch" << "Brick_Checkpoint" << "Brick_Christmas_Tree" << "Brick_Doors" << "Brick_Halloween" << "Brick_Large_Cubes"
+                    << "Brick_Teledoor" << "Brick_Treasure_Chest" << "Brick_V15"
+                 << "Emote_Alarm" << "Emote_Confusion" << "Emote_Hate" << "Emote_Love"
+                 << "Item_Key" << "Item_Skis" << "Item_Sports"
+                 << "Light_Animated" << "Light_Basic"
+                 << "Particle_Basic" << "Particle_FX_Cans" << "Particle_Grass" << "Particle_Player" << "Particle_Tools"
+                 << "Player_Fuel_Jet" << "Player_Jump_Jet" << "Player_Leap_Jet" << "Player_No_Jet" << "Player_Quake"
+                 << "Print_1x2f_BLPRemote" << "Print_1x2f_Default" << "Print_2x2f_Default" << "Print_2x2r_Default" << "Print_Letters_Default"
+                 << "Projectile_GravityRocket" << "Projectile_Pinball" << "Projectile_Pong" << "Projectile_Radio_Wave"
+                 << "Sound_Beeps" << "Sound_Phone" << "Sound_Synth4"
+                 << "Support_Doors"
+                 << "Vehicle_Ball" << "Vehicle_Flying_Wheeled_Jeep" << "Vehicle_Horse" << "Vehicle_Jeep" << "Vehicle_Magic_Carpet"
+                    << "Vehicle_Pirate_Cannon" << "Vehicle_Rowboat" << "Vehicle_Tank"
+                 << "Weapon_Bow" << "Weapon_Gun" << "Weapon_Guns_Akimbo" << "Weapon_Horse_Ray" << "Weapon_Push_Broom"
+                    << "Weapon_Rocket_Launcher" << "Weapon_Spear" << "Weapon_Sword";
+        if(defaults.contains(txt))
             addonListModel->item(i)->setCheckState(Qt::Checked);
         else
             addonListModel->item(i)->setCheckState(Qt::Unchecked);
