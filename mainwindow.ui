@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Blockland: Advanced Server Manager</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../Documents/Pictures/backgrounds/profile_16.png</normaloff>../../../Documents/Pictures/backgrounds/profile_16.png</iconset>
+  </property>
+  <property name="statusTip">
+   <string/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>804</width>
+      <height>465</height>
+     </rect>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::North</enum>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="tab_1">
+     <attribute name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/server.png</normaloff>:/server.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Server</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>640</width>
+        <height>435</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Console</string>
+      </property>
+      <widget class="QLineEdit" name="commandLine">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>410</y>
+         <width>535</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="sendCommand">
+       <property name="geometry">
+        <rect>
+         <x>545</x>
+         <y>410</y>
+         <width>90</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Send Command</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="consoleOutput">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>15</y>
+         <width>630</width>
+         <height>390</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="undoRedoEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="geometry">
+       <rect>
+        <x>645</x>
+        <y>0</y>
+        <width>150</width>
+        <height>205</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Server Settings</string>
+      </property>
+      <widget class="QComboBox" name="gamemodeBox">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>20</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="lanDed">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>100</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>LAN Server</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="serverName">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>140</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="maxPlayers">
+       <property name="geometry">
+        <rect>
+         <x>65</x>
+         <y>45</y>
+         <width>80</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>200</number>
+       </property>
+       <property name="value">
+        <number>8</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="portNumber">
+       <property name="geometry">
+        <rect>
+         <x>65</x>
+         <y>75</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>65535</number>
+       </property>
+       <property name="value">
+        <number>28000</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>45</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Max Players</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>75</y>
+         <width>60</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Server Port</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>120</y>
+         <width>145</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Server Name</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="saveFile">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>180</y>
+         <width>105</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="saveFileBrowse">
+       <property name="geometry">
+        <rect>
+         <x>115</x>
+         <y>180</y>
+         <width>30</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>160</y>
+         <width>141</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Savefile to load</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="Line" name="line">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>120</y>
+         <width>140</width>
+         <height>3</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="geometry">
+       <rect>
+        <x>645</x>
+        <y>205</y>
+        <width>150</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Blockland Executable</string>
+      </property>
+      <widget class="QLineEdit" name="blExec">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>20</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="searchExec">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>45</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Find Executable</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>645</x>
+        <y>275</y>
+        <width>150</width>
+        <height>115</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Server Start/Stop</string>
+      </property>
+      <widget class="QPushButton" name="startServer">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>20</y>
+         <width>140</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Start</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="stopServer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>55</y>
+         <width>140</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Stop</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="killServer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>90</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Kill</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/user.png</normaloff>:/user.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Players</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>795</width>
+        <height>435</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Current Players in Server</string>
+      </property>
+      <widget class="QTableView" name="players_table">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>15</y>
+         <width>785</width>
+         <height>415</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/database.png</normaloff>:/database.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Database</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/wrench.png</normaloff>:/wrench.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Server Tools</string>
+     </attribute>
+     <widget class="QTabWidget" name="tabWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>-1</x>
+        <y>-1</y>
+        <width>802</width>
+        <height>438</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="tab_addons">
+       <attribute name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/bricks.png</normaloff>:/bricks.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Add-ons</string>
+       </attribute>
+       <widget class="QListView" name="addonsView">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>5</y>
+          <width>650</width>
+          <height>400</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addonsDefault">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>5</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Only Default</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addonsAll">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>50</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>All</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addonsNone">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>95</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>None</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_2">
+        <property name="geometry">
+         <rect>
+          <x>660</x>
+          <y>10</y>
+          <width>5</width>
+          <height>390</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <widget class="Line" name="line_3">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>145</y>
+          <width>118</width>
+          <height>3</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addonsSave">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>360</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addonsReload">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>155</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Reload</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_admins">
+       <attribute name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/user_suit.png</normaloff>:/user_suit.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Admins</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>0</y>
+          <width>300</width>
+          <height>405</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Admins</string>
+        </property>
+        <widget class="QListView" name="listView">
+         <property name="geometry">
+          <rect>
+           <x>5</x>
+           <y>15</y>
+           <width>290</width>
+           <height>385</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_7">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>0</y>
+          <width>300</width>
+          <height>405</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Super Admins</string>
+        </property>
+        <widget class="QListView" name="listView_2">
+         <property name="geometry">
+          <rect>
+           <x>5</x>
+           <y>15</y>
+           <width>290</width>
+           <height>385</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>10</y>
+          <width>160</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add Admin</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>60</y>
+          <width>160</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add Super Admin</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>160</y>
+          <width>160</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Remove Admin/Super Admin</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>110</y>
+          <width>160</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Demote Super Admin</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_4">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>10</y>
+          <width>20</width>
+          <height>390</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>360</y>
+          <width>160</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/user_delete.png</normaloff>:/user_delete.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Ban List</string>
+       </attribute>
+       <widget class="QTableView" name="tableView_2">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>5</y>
+          <width>650</width>
+          <height>400</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>360</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_5">
+        <property name="geometry">
+         <rect>
+          <x>655</x>
+          <y>10</y>
+          <width>15</width>
+          <height>390</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_config">
+       <attribute name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/book_open.png</normaloff>:/book_open.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Configuration</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_colorset">
+       <attribute name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/color_wheel.png</normaloff>:/color_wheel.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Colorset</string>
+       </attribute>
+       <widget class="QTableView" name="tableView">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>5</y>
+          <width>400</width>
+          <height>400</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_flagged">
+       <attribute name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/flag_red.png</normaloff>:/flag_red.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Flagged Items</string>
+       </attribute>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/plugin.png</normaloff>:/plugin.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Options</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuServer">
+    <property name="title">
+     <string>Server</string>
+    </property>
+    <addaction name="actionReconnect"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionLog_Window"/>
+   </widget>
+   <addaction name="menuServer"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionReconnect">
+   <property name="text">
+    <string>Reconnect</string>
+   </property>
+   <property name="toolTip">
+    <string>Reconnect to server</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionLog_Window">
+   <property name="text">
+    <string>Log Window</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Log Window</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

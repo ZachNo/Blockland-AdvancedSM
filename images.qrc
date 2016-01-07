@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>database.png</file>
+        <file>plugin.png</file>
+        <file>server.png</file>
+        <file>user.png</file>
+        <file>wrench.png</file>
+        <file>book_open.png</file>
+        <file>bricks.png</file>
+        <file>color_wheel.png</file>
+        <file>flag_red.png</file>
+        <file>user_suit.png</file>
+        <file>Logo.png</file>
+        <file>user_delete.png</file>
+    </qresource>
+</RCC>
