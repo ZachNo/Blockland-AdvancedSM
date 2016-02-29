@@ -92,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //Colorset
     colorsetModel = new QStandardItemModel;
     ui->colorSetTable->setModel(colorsetModel);
+    connect(ui->setColorset, SIGNAL(clicked(bool)), this, SLOT(saveColorset()));
 
     //Try to load config file
     loadSettings();
