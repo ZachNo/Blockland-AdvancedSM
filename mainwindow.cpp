@@ -89,8 +89,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     addonListModel = new QStandardItemModel;
     ui->addonsView->setModel(addonListModel);
 
+    //Colorset
+    colorsetModel = new QStandardItemModel;
+    ui->colorSetTable->setModel(colorsetModel);
+
     //Try to load config file
     loadSettings();
+
+    //If I do it before, it stack overflows
+    connect(ui->allColorsets, SIGNAL(currentIndexChanged(int)), this, SLOT(loadColorset()));
 }
 
 //MainWindow destructor
@@ -124,303 +131,13 @@ void MainWindow::openAbout()
     aboutW->show();
 }
 
-//Open file browser for Blockland.exe
-void MainWindow::openBLExec()
-{
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select File"), "/", tr("*.exe"));
-    if(filename == tr("")) //User hit cancel, ignore
-        return;
-    ui->blExec->setText(filename);
-    basePathBuild();
-    saveSettings();
-}
-
-//Set base path and build gamemode list
-void MainWindow::basePathBuild()
-{
-    //Get base path from the path to Blockland.exe
-    *basePath = ui->blExec->text().trimmed().replace('\\','/').replace("Blockland.exe","");
-    //QFile only accepts / as directory seperator, get rid of Blockland.exe
-    buildGamemodeList();
-    loadAddonList();
-}
-
-//Open file browser for save files
-void MainWindow::openSavefile()
-{
-    QString filename = QFileDialog::getOpenFileName(this, tr("Select File"), "/", tr("*.bls"));
-    ui->saveFile->setText(filename);
-    return;
-}
-
-//Start a BL server process
-void MainWindow::startServer()
-{
-    //Ignore if we don't have a .exe seleceted
-    if(ui->blExec->text().trimmed() == tr(""))
-    {
-        updateStatus("Tried to start server without entering an exe.");
-        return;
-    }
-
-    //Ignore if the file doesn't exist
-    if(!QFile::exists(ui->blExec->text().trimmed()))
-    {
-        updateStatus("Entered exe doesn't exist!");
-        return;
-    }
-
-    //Ignore if no gamemode selected
-    if(ui->gamemodeBox->currentText().trimmed() == tr("Select a Gamemode..."))
-    {
-        updateStatus("No gamemode has been selected!");
-        return;
-    }
-
-    //Move main.cs.dso and replace with our modified version to add functionality
-    //Make file path of current main.cs.dso and backup
-    QString mainFile = (*basePath).trimmed().append("base/main.cs.dso");
-    QString mainFileNew = (*basePath).trimmed().append("base/main_backup.cs.dso");
-    //Make file path of our file and where to put it
-    QString repFile = QDir::currentPath().append("/replace.cs");
-    QString repFileNew = (*basePath).trimmed().append("base/main.cs");
-    //Start replacing the files
-    if(QFile::exists(mainFileNew))
-    {
-        if(!QFile::remove(mainFileNew))
-        {
-            updateStatus(tr("Failed to remove ").append(mainFileNew));
-            return;
-        }
-    }
-    if(!QFile::copy(mainFile,mainFileNew))
-    {
-        updateStatus(tr("Failed to copy ").append(mainFile).append(" to ").append(mainFileNew));
-        return;
-    }
-    if(!QFile::copy(repFile,repFileNew))
-    {
-        updateStatus(tr("Failed to copy ").append(repFile).append(" to ").append(repFileNew));
-        return;
-    }
-    if(!QFile::remove(mainFile))
-    {
-        updateStatus(tr("Failed to remove ").append(mainFile));
-        return;
-    }
-
-    //Display and log messages
-    updateStatus("Attemping to start Blockland server...");
-
-    //Switch button states
-    ui->startServer->setDisabled(1);
-    ui->stopServer->setDisabled(0);
-    ui->killServer->setDisabled(0);
-
-    //If we already have a server process, delete it
-    if(server)
-    {
-        if(server->state() == QProcess::Running)
-            server->kill();
-    }
-
-    //Create new server instance, start it with the selected .exe
-    server = new QProcess(this);
-    server->setProcessChannelMode(QProcess::MergedChannels);
-
-    //Generate args list based on things entered into GUI
-    QStringList args;
-    args << "ptlaaxobimwroe";
-    if(ui->lanDed->isChecked())
-        args << "-dedicatedLan";
-    else
-        args << "-dedicated";
-    args << "-port"
-         << QString::number(ui->portNumber->value())
-         << "-maxPlayers"
-         << QString::number(ui->maxPlayers->value())
-         << "-serverName"
-         << ui->serverName->text().trimmed()
-         << "-console";
-    if(ui->gamemodeBox->currentText() != tr("Custom"))
-        args << "-gamemode" << ui->gamemodeBox->currentText().trimmed();
-
-    if(ui->saveFile->text().trimmed() != tr("") && ui->gamemodeBox->currentText() == tr("Custom"))
-        args << "-loadBLS" << ui->saveFile->text().trimmed();
-
-    //Start server process with everything
-    server->start(ui->blExec->text().trimmed(), args);
-    serverStarting = true;
-
-    //Connect it to update other things
-    connect(server,SIGNAL(error(QProcess::ProcessError)),this,SLOT(processError(QProcess::ProcessError)));
-    connect(server,SIGNAL(readyRead()),this,SLOT(updateOutput()));
-    connect(server,SIGNAL(finished(int)),this,SLOT(serverStopped()));
-
-    return;
-}
-
-//Ask server to stop
-void MainWindow::stopServer()
-{
-    //Check if the server is running or not
-    if(server->state() != QProcess::NotRunning)
-        connection->sendCommand("quit();");
-    ui->stopServer->setDisabled(1);
-    updateStatus("Attempting to stop server...");
-    return;
-}
-
-//Called when server process stops
-void MainWindow::serverStopped()
-{
-    ui->stopServer->setDisabled(1);
-    ui->startServer->setDisabled(0);
-    ui->killServer->setDisabled(1);
-    delete server;
-    server = NULL;
-    updateStatus("Server stopped successfully");
-}
-
-//Called when kill button is clicked
-void MainWindow::killServer()
-{
-    //Check if the server is running or not
-    if(server->state() != QProcess::NotRunning)
-        server->kill();
-    ui->stopServer->setDisabled(1);
-    ui->killServer->setDisabled(1);
-    updateStatus("Attempting to kill server...");
-    return;
-}
-
-//Replace files that we messed with previously
-void MainWindow::cleanFiles()
-{
-    //Make file path of current main.cs.dso and backup
-    QString mainFileNew = (*basePath).trimmed().append("base/main.cs.dso");
-    QString mainFile = (*basePath).trimmed().append("base/main_backup.cs.dso");
-    //Make file path of our file and where to put it
-    QString repFile = (*basePath).trimmed().append("base/main.cs");
-    //Start replacing the files
-    if(!QFile::copy(mainFile,mainFileNew))
-        updateStatus(tr("Failed to copy ").append(mainFile).append(" to ").append(mainFileNew));
-    if(!QFile::remove(mainFile))
-        updateStatus(tr("Failed to remove ").append(mainFile));
-    if(!QFile::remove(repFile))
-        updateStatus(tr("Failed to remove ").append(repFile));
-}
-
-//Spits out error to statusbar is something went bad
-void MainWindow::processError(QProcess::ProcessError err)
-{
-    if(err == QProcess::FailedToStart)
-        updateStatus("Failed to start server");
-    if(err == QProcess::Crashed)
-        updateStatus("Server crashed?");
-    if(err == QProcess::Timedout)
-        updateStatus("Server timedout (hung)");
-    if(err == QProcess::WriteError)
-        updateStatus("Write error");
-    if(err == QProcess::ReadError)
-        updateStatus("Read error");
-    if(err == QProcess::UnknownError)
-        updateStatus("Something went and borked");
-    return;
-}
-
-//Update the textbox with the console output
-void MainWindow::updateOutput()
-{
-    //TODO: Format output to be nicer
-    QString output = server->readAllStandardOutput();
-
-    //Trim spaces, as long as it isn't a tab!
-    output = output.replace("%","");
-    int n = output.size() - 1;
-    while(n >= 0)
-    {
-        if (output.at(n).isSpace())
-            output.remove(n,1);
-        else
-            break;
-        --n;
-    }
-    while(output.size())
-    {
-        if (output.at(0) == tr("\n") || output.at(0) == tr("\r"))
-            output.remove(0,1);
-        else
-            break;
-    }
-
-    //Trigger that our stuff is done executing
-    if(serverStarting && output.contains("--------- End Executing Custom Code ---------"))
-    {
-        connection->reconnect();
-        cleanFiles();
-        serverStarting = false;
-    }
-
-    //Blockland doesn't output anything special for warn() or error() to console, so we emulate it partially by using some default phrases
-    if(output.contains("): ") || output.contains("datablocks added.") || output.contains("will not execute"))
-        output = tr("<font color=#777777>").append(output).append("</font>");
-
-    if(output.contains("Loading Add-On: "))
-    {
-        output = tr("<font color=#0000ff>").append(output).append("</font>");
-        int breakPos = output.indexOf("(CRC:");
-        output.insert(breakPos,"</font><font color=#777777>");
-    }
-
-    if(output.contains("error "))
-        output = tr("<font color=#ff0000>").append(output).append("</font>");
-
-    //Finally write it to console
-    ui->consoleOutput->append(output);
-}
-
 //Add message to log and display on status bar
 void MainWindow::updateStatus(QString mes)
 {
     ui->statusBar->showMessage(mes);
     logText->append("\n");
     logText->append(mes);
-}
-
-//Write command data to stdin
-void MainWindow::sendCommand()
-{
-    if(ui->commandLine->text().trimmed() == tr(""))
-        return;
-    connection->sendCommand(ui->commandLine->text().trimmed());
-    ui->commandLine->clear();
-}
-
-//Use basepath, then iterate to find all Gamemodes
-void MainWindow::buildGamemodeList()
-{    
-    //Remove all previous gamemodes...
-    while(ui->gamemodeBox->count())
-        ui->gamemodeBox->removeItem(0);
-    //Add defaults
-    ui->gamemodeBox->addItem("Select a Gamemode...");
-    ui->gamemodeBox->addItem("Custom");
-
-    //Iterate through add-ons and get gamemodes
-    QString path = (*basePath).trimmed().append("Add-ons/");
-    QDirIterator iter(path, QDir::Files | QDir::Dirs);
-    while (iter.hasNext())
-    {
-        iter.next();
-        if(iter.fileName().toLower().contains("gamemode_"))
-        {
-            QString gamemode = iter.fileName().remove(0,9); //remove Gamemode_
-            if(iter.fileInfo().isFile())
-                gamemode = gamemode.remove(gamemode.length()-4,4); //remove .zip
-            ui->gamemodeBox->addItem(gamemode);
-        }
-    }
+    logW->updateLogForce();
 }
 
 //Save all valued settings to file
@@ -486,9 +203,9 @@ bool MainWindow::loadSettings()
         return false;
     }
 
-    QFile save;
-    save.setFileName(path);
-    if(!save.open(QIODevice::ReadOnly))
+    QFile load;
+    load.setFileName(path);
+    if(!load.open(QIODevice::ReadOnly))
     {
         updateStatus("Unable to open config.ini for read!");
         return false;
@@ -498,12 +215,12 @@ bool MainWindow::loadSettings()
     QString importTxt;
 
     //Import bl.exe path
-    importTxt = save.readLine();
+    importTxt = load.readLine();
     ui->blExec->setText(importTxt.remove("BLExecPath ").trimmed());
     basePathBuild();
 
     //import gamemode
-    importTxt = save.readLine();
+    importTxt = load.readLine();
     int gamemode = ui->gamemodeBox->findText(importTxt.remove("ServerGame ").trimmed());
     if(gamemode == -1)
     {
@@ -514,209 +231,20 @@ bool MainWindow::loadSettings()
         ui->gamemodeBox->setCurrentIndex(gamemode);
 
     //import simple server settings
-    importTxt = save.readLine();
+    importTxt = load.readLine();
     ui->maxPlayers->setValue(importTxt.section(' ',1,1).toInt());
     ui->portNumber->setValue(importTxt.section(' ',2,2).toInt());
     ui->lanDed->setChecked(importTxt.section(' ',3,3).toInt());
 
     //import server name
-    importTxt = save.readLine();
+    importTxt = load.readLine();
     ui->serverName->setText(importTxt.remove("ServerName ").trimmed());
 
     //import server save file
-    importTxt = save.readLine();
+    importTxt = load.readLine();
     ui->saveFile->setText(importTxt.remove("ServerSave ").trimmed());
 
-    save.close();
+    load.close();
     return true;
-}
-
-//Load ADD_ON_LIST and create list view from it.
-void MainWindow::loadAddonList()
-{
-    //Clear list first
-    addonListModel->clear();
-
-    QString path = (*basePath).trimmed().append("config/server/ADD_ON_LIST.cs");
-    QString addonPath = (*basePath).trimmed().append("Add-ons/");
-
-    //Load the file
-    QFile add;
-    add.setFileName(path);
-    if(!add.open(QIODevice::ReadOnly)) //First open file to only read, we'll rewrite the file later
-    {
-        updateStatus(tr("Unable to open ").append(path).append(" !"));
-        return;
-    }
-
-    //Loop through file
-    while(!add.atEnd())
-    {
-        //Get line, then check if empty
-        QString line = add.readLine();
-        if(line.trimmed() == tr(""))
-            break;
-        //delete $AddOn__ and end ;
-        line = line.remove(line.length()-1,1).remove(0,8);
-
-        //See if it should have a check mark or not
-        bool checked;
-        if(line.contains("-1"))
-            checked = false;
-        else
-            checked = true;
-
-        //Get index of space after addon name
-        int firstSpace = line.indexOf(" ");
-        //Finalize the string of the addon name
-        line = line.remove(firstSpace,line.length() - firstSpace);
-
-        //If add-on isn't in Add-ons folder, ignore value for it
-        if(!QFile::exists(addonPath.trimmed().append(line)) && !QFile::exists(addonPath.trimmed().append(line).append(".zip")))
-            continue;
-
-        //Make item and add it to list
-        QStandardItem *item = new QStandardItem();
-        item->setCheckable(true);
-        if(checked)
-            item->setCheckState(Qt::Checked);
-        else
-            item->setCheckState(Qt::Unchecked);
-        item->setText(line);
-        addonListModel->appendRow(item);
-    }
-
-    //Commented out because it doesn't work too well
-    /*//Try to load other things that may have been added, but not run yet.
-    QDirIterator iter(addonPath, QDir::Files | QDir::Dirs);
-    while (iter.hasNext())
-    {
-        iter.next();
-        QString filename = iter.fileName();
-        QString compFN = filename.toLower();
-        if(compFN.contains(".zip"))
-            compFN.remove(compFN.length()-4,4);
-
-        //Remove all of the definite not server add-ons from the list
-        if(!addonListModel->findItems(compFN,Qt::MatchContains).isEmpty()) //skip addons already in list
-            continue;
-        if(filename == "Music")
-            continue;
-        if(compFN.contains("speedkart_"))
-            continue;
-        if(compFN.contains("sky_"))
-            continue;
-        if(compFN.contains("map_"))
-            continue;
-        if(compFN.contains("speedkart_"))
-            continue;
-        if(compFN.contains("client_"))
-            continue;
-        if(compFN.contains("colorset_"))
-            continue;
-        if(compFN.contains("daycycle_"))
-            continue;
-        if(compFN.contains("decal_"))
-            continue;
-        if(compFN.contains("face_"))
-            continue;
-        if(compFN.contains("ground_"))
-            continue;
-        if(compFN.contains("gui_"))
-            continue;
-        if(compFN.contains("risinglava_"))
-            continue;
-        if(compFN.contains("water_"))
-            continue;
-
-        //Add item
-        QStandardItem *item = new QStandardItem();
-        item->setCheckable(true);
-        item->setCheckState(Qt::Unchecked);
-        item->setText(compFN);
-        addonListModel->appendRow(item);
-    }*/
-
-    updateStatus("Add-on list successfully imported!");
-}
-
-//Save add-on list to ADD_ON_LIST.cs
-void MainWindow::saveAddonList()
-{
-    QString path = (*basePath).trimmed().append("config/server/ADD_ON_LIST.cs");
-
-    //Delete existing file to start fresh
-    if(QFile::exists(path))
-        QFile::remove(path);
-
-    //Load the file
-    QFile add;
-    add.setFileName(path);
-    if(!add.open(QIODevice::WriteOnly)) //Try to open file
-    {
-        updateStatus(tr("Unable to open ").append(path).append(" !"));
-        return;
-    }
-
-    //Loop through addons
-    for(int i = 0; i < addonListModel->rowCount(); ++i)
-    {
-        //Assemble line text
-        QString line = tr("$AddOn__").append(addonListModel->item(i)->text()).append(" = ");
-
-        //Get checked state
-        if(addonListModel->item(i)->checkState() == Qt::Checked)
-            line.append("1;\r\n");
-        else
-            line.append("-1;\r\n");
-
-        //Write line to file
-        add.write(line.toStdString().c_str());
-    }
-    updateStatus("Add-on list successfully saved!");
-}
-
-//Set check for all addons
-void MainWindow::allAddons()
-{
-    for(int i = 0; i < addonListModel->rowCount(); ++i)
-        addonListModel->item(i)->setCheckState(Qt::Checked);
-}
-
-//Set uncheck for all addons
-void MainWindow::noAddons()
-{
-    for(int i = 0; i < addonListModel->rowCount(); ++i)
-        addonListModel->item(i)->setCheckState(Qt::Unchecked);
-}
-
-//Set only default addons
-void MainWindow::defaultAddons()
-{
-    for(int i = 0; i < addonListModel->rowCount(); ++i)
-    {
-        QString txt = addonListModel->item(i)->text();
-        QStringList defaults; //Make a list of all the default add-ons...
-        defaults << "Bot_Blockhead" << "Bot_Hole" << "Bot_Horse" << "Bot_Shark" << "Bot_Zombie"
-                 << "Brick_Arch" << "Brick_Checkpoint" << "Brick_Christmas_Tree" << "Brick_Doors" << "Brick_Halloween" << "Brick_Large_Cubes"
-                    << "Brick_Teledoor" << "Brick_Treasure_Chest" << "Brick_V15"
-                 << "Emote_Alarm" << "Emote_Confusion" << "Emote_Hate" << "Emote_Love"
-                 << "Item_Key" << "Item_Skis" << "Item_Sports"
-                 << "Light_Animated" << "Light_Basic"
-                 << "Particle_Basic" << "Particle_FX_Cans" << "Particle_Grass" << "Particle_Player" << "Particle_Tools"
-                 << "Player_Fuel_Jet" << "Player_Jump_Jet" << "Player_Leap_Jet" << "Player_No_Jet" << "Player_Quake"
-                 << "Print_1x2f_BLPRemote" << "Print_1x2f_Default" << "Print_2x2f_Default" << "Print_2x2r_Default" << "Print_Letters_Default"
-                 << "Projectile_GravityRocket" << "Projectile_Pinball" << "Projectile_Pong" << "Projectile_Radio_Wave"
-                 << "Sound_Beeps" << "Sound_Phone" << "Sound_Synth4"
-                 << "Support_Doors"
-                 << "Vehicle_Ball" << "Vehicle_Flying_Wheeled_Jeep" << "Vehicle_Horse" << "Vehicle_Jeep" << "Vehicle_Magic_Carpet"
-                    << "Vehicle_Pirate_Cannon" << "Vehicle_Rowboat" << "Vehicle_Tank"
-                 << "Weapon_Bow" << "Weapon_Gun" << "Weapon_Guns_Akimbo" << "Weapon_Horse_Ray" << "Weapon_Push_Broom"
-                    << "Weapon_Rocket_Launcher" << "Weapon_Spear" << "Weapon_Sword";
-        if(defaults.contains(txt))
-            addonListModel->item(i)->setCheckState(Qt::Checked);
-        else
-            addonListModel->item(i)->setCheckState(Qt::Unchecked);
-    }
 }
 

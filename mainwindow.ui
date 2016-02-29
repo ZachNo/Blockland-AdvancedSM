@@ -52,7 +52,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -461,7 +461,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tab_addons">
        <attribute name="icon">
@@ -706,7 +706,7 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_banlist">
        <attribute name="icon">
         <iconset resource="images.qrc">
          <normaloff>:/user_delete.png</normaloff>:/user_delete.png</iconset>
@@ -768,14 +768,81 @@
        <attribute name="title">
         <string>Colorset</string>
        </attribute>
-       <widget class="QTableView" name="tableView">
+       <widget class="QTableView" name="colorSetTable">
         <property name="geometry">
          <rect>
           <x>5</x>
           <y>5</y>
-          <width>400</width>
+          <width>600</width>
           <height>400</height>
          </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="dragEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="showGrid">
+         <bool>false</bool>
+        </property>
+        <property name="cornerButtonEnabled">
+         <bool>false</bool>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+       </widget>
+       <widget class="QComboBox" name="allColorsets">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>15</y>
+          <width>160</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="Line" name="line_6">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>10</y>
+          <width>15</width>
+          <height>390</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="setColorset">
+        <property name="geometry">
+         <rect>
+          <x>630</x>
+          <y>50</y>
+          <width>160</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Set server colorset
+(Requires restart)</string>
         </property>
        </widget>
       </widget>

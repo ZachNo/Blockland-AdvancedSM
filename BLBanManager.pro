@@ -5,6 +5,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = BLBanManager
 TEMPLATE = app
 
+LIBS += quazip.lib
+
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -12,7 +14,10 @@ SOURCES += main.cpp\
     log.cpp \
     database.cpp \
     serverconnection.cpp \
-    about.cpp
+    about.cpp \
+    mainwindow_addons.cpp \
+    mainwindow_serverlauncher.cpp \
+    mainwindow_colorset.cpp
 
 HEADERS  += mainwindow.h \
     currentPlayers.h \

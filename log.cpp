@@ -13,6 +13,7 @@ LogWindow::LogWindow(QWidget *parent) : QWidget(parent)
     logBox->setReadOnly(true);
     logBox->move(5,5);
 
+
     //How to tell if scroll bar is currently being used
     connect(logBox->verticalScrollBar(), SIGNAL(sliderPressed()), this, SLOT(startSlider()));
     connect(logBox->verticalScrollBar(), SIGNAL(sliderReleased()), this, SLOT(stopSlider()));
@@ -37,7 +38,7 @@ void LogWindow::updateLogForce()
         logBox->verticalScrollBar()->setValue(logBox->verticalScrollBar()->maximum());
     else
         logBox->verticalScrollBar()->setValue(pos);
-    QTimer::singleShot(100, this, SLOT(updateLogForce()));
+    //QTimer::singleShot(100, this, SLOT(updateLogForce()));
 }
 
 void LogWindow::startSlider()
