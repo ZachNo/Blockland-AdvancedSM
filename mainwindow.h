@@ -8,6 +8,10 @@
 #include <QProcess>
 #include <QFile>
 #include <QDirIterator>
+#include <QColor>
+#include <QByteArray>
+#include <quazip.h>
+#include <quazipfile.h>
 
 #include "serverconnection.h"
 #include "log.h"
@@ -34,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
     QStandardItemModel *addonListModel;
+    QStandardItemModel *colorsetModel;
     ServerConnection *connection;
     LogWindow *logW;
     AboutWindow *aboutW;
@@ -68,6 +73,8 @@ private slots:
     void noAddons();
     void defaultAddons();
     void loadAddonList();
+    void loadColorset();
+    void saveColorset();
 };
 
 #endif // MAINWINDOW_H

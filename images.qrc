@@ -12,5 +12,7 @@
         <file>user_suit.png</file>
         <file>Logo.png</file>
         <file>user_delete.png</file>
+        <file>help.png</file>
+        <file>checkerboard.png</file>
     </qresource>
 </RCC>

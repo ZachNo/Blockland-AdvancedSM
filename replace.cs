@@ -1,41 +1,7 @@
-//+ main.cs
-//+
-//+ Remade with added functions to facilitate server manager
-//+
 //++++++++++++++++++++++++++++++++
 //+ DO NOT EDIT CODE BELOW UNLESS YOU KNOW WHAT YOU ARE DOING!
-//+ YOU CAN BREAK BLOCKLAND AND THE SERVER MANAGER!
+//+ YOU CAN BREAK THE SERVER MANAGER!
 //++++++++++++++++++++++++++++++++
-
-function initCommon()
-{
-	setRandomSeed();
-	exec("./client/canvas.cs");
-	exec("./client/audio.cs");
-}
-
-function initBaseClient()
-{
-	exec("./client/message.cs");
-	exec("./client/mission.cs");
-	exec("./client/missionDownload.cs");
-	exec("./client/actionMap.cs");
-}
-
-function initBaseServer()
-{
-	exec("./server/mainServer.cs");
-}
-
-function onDatablockLimitExceeded()
-{
-	$datablockExceededCount += 1;
-}
-
-function onDatablocksDeleted()
-{
-	$datablockExceededCount = 0;
-}
 
 echo("--------- Executing Custom Code ---------");
 
