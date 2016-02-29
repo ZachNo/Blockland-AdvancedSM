@@ -80,7 +80,13 @@ void MainWindow::loadColorset()
 
                 if(line.contains("DIV:"))
                 {
+                    QStandardItem *item = new QStandardItem();
+                    item->setToolTip(line);
+                    item->setSelectable(false);
+                    item->setEditable(false);
                     ui->colorSetTable->setColumnWidth(column, 36);
+                    ui->colorSetTable->setRowHeight(row, 36);
+                    colorsetModel->setItem(row, column, item);
                     ++column;
                     row = -1;
                 }
@@ -89,7 +95,12 @@ void MainWindow::loadColorset()
                     QStandardItem *item = new QStandardItem();
                     QImage image(":/checkerboard.png");
                     QPainter painter(&image);
-                    painter.fillRect(0,0,38,38,QBrush(getColor(line)));
+                    QColor actualColor = getColor(line);
+                    painter.fillRect(0,0,38,38,QBrush(actualColor));
+                    item->setToolTip(tr(" ").prepend(QString::number(actualColor.red()))
+                                      .append(QString::number(actualColor.green())).append(" ")
+                                      .append(QString::number(actualColor.blue())).append(" ")
+                                      .append(QString::number(actualColor.alpha())));
                     item->setBackground(QBrush(image));
                     item->setSelectable(false);
                     item->setEditable(false);
@@ -128,7 +139,13 @@ void MainWindow::loadColorset()
 
         if(line.contains("DIV:"))
         {
+            QStandardItem *item = new QStandardItem();
+            item->setToolTip(line);
+            item->setSelectable(false);
+            item->setEditable(false);
             ui->colorSetTable->setColumnWidth(column, 36);
+            ui->colorSetTable->setRowHeight(row, 36);
+            colorsetModel->setItem(row, column, item);
             ++column;
             row = -1;
         }
@@ -137,7 +154,12 @@ void MainWindow::loadColorset()
             QStandardItem *item = new QStandardItem();
             QImage image(":/checkerboard.png");
             QPainter painter(&image);
-            painter.fillRect(0,0,38,38,QBrush(getColor(line)));
+            QColor actualColor = getColor(line);
+            painter.fillRect(0,0,38,38,QBrush(actualColor));
+            item->setToolTip(tr(" ").prepend(QString::number(actualColor.red()))
+                             .append(QString::number(actualColor.green())).append(" ")
+                             .append(QString::number(actualColor.blue())).append(" ")
+                             .append(QString::number(actualColor.alpha())));
             item->setBackground(QBrush(image));
             item->setSelectable(false);
             item->setEditable(false);
@@ -175,6 +197,39 @@ void MainWindow::loadColorset()
 
 void MainWindow::saveColorset()
 {
-    return;
+    QString path = (*basePath).trimmed().append("config/server/colorSet.txt");
+
+    //Delete existing file to start fresh
+    if(QFile::exists(path))
+        QFile::remove(path);
+
+    //Load the file
+    QFile color;
+    color.setFileName(path);
+    if(!color.open(QIODevice::WriteOnly)) //Try to open file
+    {
+        updateStatus(tr("Unable to open ").append(path).append(" !"));
+        return;
+    }
+    //Loop through addons
+    for(int i = 0; i < colorsetModel->columnCount(); ++i)
+    {
+        for(int j = 0; j < colorsetModel->rowCount(); ++j)
+        {
+            //Assemble line text
+            QStandardItem *item = colorsetModel->item(j,i);
+            if(item == 0)
+                continue;
+            QString line = item->toolTip();
+            if(line.contains("DIV:"))
+                line.append("\r\n");
+            line.append("\r\n");
+            //Write line to file
+            color.write(line.toStdString().c_str());
+        }
+    }
+    color.close();
+
+    updateStatus("Colorset successfully saved!");
 }
 
