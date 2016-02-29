@@ -5,7 +5,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     //Initialize server to NULL
-    server = NULL;
+    server = nullptr;
 
     //Set basepath to nothing
     basePath = new QString;
@@ -59,14 +59,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     //Add gamemodes
     ui->gamemodeBox->addItem("Select a Gamemode...");
-    //Function to search for Gamemodes
-
-    //Add types of searches to combo box
-    //ui->searchType->addItem("BLID");
-    //ui->searchType->addItem("IP");
-    //ui->searchType->addItem("Name");
 
     //Link SQLite Database
+    db = nullptr;
     //db = new ABMDatabase(logText);
     //db->initDatabase();
 
@@ -94,6 +89,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->colorSetTable->setModel(colorsetModel);
     connect(ui->setColorset, SIGNAL(clicked(bool)), this, SLOT(saveColorset()));
 
+    //Banlist
+    banlistModel = new QStandardItemModel;
+    ui->banlistTable->setModel(banlistModel);
+    banlistModel->setHorizontalHeaderLabels(
+        QStringList() << tr("Admin")
+                      << tr("Admin BLID")
+                      << tr("Name")
+                      << tr("BLID")
+                      << tr("IP")
+                      << tr("Reason")
+                      << tr("Expiration Year")
+                      << tr("Expiration Minute"));
+    ui->banlistTable->verticalHeader()->hide();
+    ui->banlistTable->horizontalHeader()->setStretchLastSection(true);
+    ui->banlistTable->setColumnWidth(0,125);
+    ui->banlistTable->setColumnWidth(1,75);
+    ui->banlistTable->setColumnWidth(2,125);
+    ui->banlistTable->setColumnWidth(3,75);
+    ui->banlistTable->setColumnWidth(4,100);
+    ui->banlistTable->setColumnWidth(5,300);
+    ui->banlistTable->setColumnWidth(6,125);
+    ui->banlistTable->setColumnWidth(7,125);
+    connect(ui->refreshBanlist, SIGNAL(clicked(bool)), this, SLOT(loadBanlist()));
+
     //Try to load config file
     loadSettings();
 
@@ -114,10 +133,13 @@ MainWindow::~MainWindow()
     delete addonListModel;
     delete connection;
     delete logW;
-    //delete db;
+    delete db;
     delete keyPress;
     delete basePath;
     delete aboutW;
+    delete colorsetModel;
+    delete banlistModel;
+    //delete logText; deleting causes crash on exit
 }
 
 //Open log window

@@ -21,6 +21,7 @@ void MainWindow::basePathBuild()
     buildGamemodeList();
     loadAddonList();
     loadColorset();
+    loadBanlist();
 }
 
 //Open file browser for save files
@@ -134,7 +135,7 @@ void MainWindow::serverStopped()
     ui->startServer->setDisabled(0);
     ui->killServer->setDisabled(1);
     delete server;
-    server = NULL;
+    server = nullptr;
     updateStatus("Server stopped successfully");
 }
 

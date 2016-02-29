@@ -39,6 +39,7 @@ private:
     QStandardItemModel *model;
     QStandardItemModel *addonListModel;
     QStandardItemModel *colorsetModel;
+    QStandardItemModel *banlistModel;
     ServerConnection *connection;
     LogWindow *logW;
     AboutWindow *aboutW;
@@ -75,6 +76,7 @@ private slots:
     void loadAddonList();
     void loadColorset();
     void saveColorset();
+    void loadBanlist();
 };
 
 #endif // MAINWINDOW_H

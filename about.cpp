@@ -3,14 +3,14 @@
 AboutWindow::AboutWindow(QWidget *parent) : QWidget(parent)
 {
     //Create textbox in window
-    this->setFixedSize(250,90);
+    this->setFixedSize(250,100);
     this->setWindowTitle(tr("ASM: About Window"));
     aboutBox = new QLabel;
     aboutBox->setParent(this);
     aboutBox->move(0,60);
     aboutBox->setFixedWidth(250);
     aboutBox->setAlignment(Qt::AlignCenter);
-    aboutBox->setText("Created by ZSNO\nSilk Icon Pack made by Mark James");
+    aboutBox->setText("Created by ZSNO\nSilk Icon Pack made by Mark James\nUses zlib + QuaZip");
     image = new QPixmap;
     image->load(":/Logo.png");
     aboutImage = new QLabel;
