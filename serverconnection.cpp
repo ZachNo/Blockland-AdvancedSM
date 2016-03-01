@@ -30,7 +30,10 @@ void ServerConnection::onError(QAbstractSocket::SocketError)
 
 void ServerConnection::onMessageReceived()
 {
-    //interpret message
+    QByteArray data = tcp->readLine();
+    QString stringData(data);
+    if(stringData.startsWith("PLAYERS "))
+        main->updatePlayers(stringData.remove("PLAYERS "));
     return;
 }
 
