@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     mainwindow_addons.cpp \
     mainwindow_serverlauncher.cpp \
     mainwindow_colorset.cpp \
-    mainwindow_banlist.cpp
+    mainwindow_banlist.cpp \
+    mainwindow_players.cpp
 
 HEADERS  += mainwindow.h \
     currentPlayers.h \

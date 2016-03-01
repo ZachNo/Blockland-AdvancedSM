@@ -31,6 +31,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void updateStatus(QString mes);
+    void updatePlayers(QString input);
     Ui::MainWindow *getUI()
     {return ui;}
 
@@ -77,6 +78,7 @@ private slots:
     void loadColorset();
     void saveColorset();
     void loadBanlist();
+    void saveBanlist();
 };
 
 #endif // MAINWINDOW_H

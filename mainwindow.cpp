@@ -112,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->banlistTable->setColumnWidth(6,125);
     ui->banlistTable->setColumnWidth(7,125);
     connect(ui->refreshBanlist, SIGNAL(clicked(bool)), this, SLOT(loadBanlist()));
+    connect(ui->saveBanlist, SIGNAL(clicked(bool)), this, SLOT(saveBanlist()));
 
     //Try to load config file
     loadSettings();
