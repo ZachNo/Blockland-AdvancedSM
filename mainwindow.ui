@@ -106,7 +106,7 @@
          <x>5</x>
          <y>15</y>
          <width>630</width>
-         <height>390</height>
+         <height>370</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -125,6 +125,38 @@
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QCheckBox" name="onlySeeChat">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>390</y>
+         <width>131</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Only show server chat</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="chatBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>15</y>
+         <width>630</width>
+         <height>370</height>
+        </rect>
+       </property>
+       <property name="undoRedoEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
@@ -132,7 +164,7 @@
         <x>645</x>
         <y>0</y>
         <width>150</width>
-        <height>205</height>
+        <height>225</height>
        </rect>
       </property>
       <property name="title">
@@ -151,7 +183,7 @@
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QRadioButton" name="lanDed">
+      <widget class="QCheckBox" name="lanDed">
        <property name="geometry">
         <rect>
          <x>5</x>
@@ -306,12 +338,25 @@
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+      <widget class="QCheckBox" name="useSteam">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>200</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Steam Authentication</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_3">
       <property name="geometry">
        <rect>
         <x>645</x>
-        <y>205</y>
+        <y>225</y>
         <width>150</width>
         <height>70</height>
        </rect>
@@ -347,7 +392,7 @@
       <property name="geometry">
        <rect>
         <x>645</x>
-        <y>275</y>
+        <y>295</y>
         <width>150</width>
         <height>115</height>
        </rect>
@@ -461,7 +506,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_addons">
        <attribute name="icon">
@@ -761,6 +806,19 @@
         </property>
         <property name="text">
          <string>Refresh Banlist</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addBanBtn">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>260</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add Ban</string>
         </property>
        </widget>
       </widget>

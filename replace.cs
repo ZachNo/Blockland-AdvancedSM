@@ -14,9 +14,10 @@ function initASMCom()
 {
 	new TCPObject(asmCom);
 	asmCom.listen($asm::com::serverPort);
+	sendClientList();
 }
 
-function asmCom::onConnectRequest(%this,%address,%socket)
+function asmCom::onConnectRequest(%this, %address, %socket)
 {
 	%server = new TCPObject(asmComInput,%socket)
 	{
@@ -35,15 +36,21 @@ function sendClientList()
 {
 	cancel($sendClientList);
 	%count = ClientGroup.getCount();
-	%output = "";
 	for(%i=0;%i<%count;%i++)
 	{
 		%client = ClientGroup.getObject(%i);
-		%output = %output @ %client.getPlayerName() @ "\t" @ %client.getBLID() @ "\t" @ %client.getPing();
+		if(%client.isSuperAdmin)
+			%output = "S";
+		else if(%client.isAdmin)
+			%output = "A";
+		else
+			%output = " ";
+		%output = %output @ "\t" @ %client.getPlayerName() @ "\t" @ %client.getBLID() @ "\t" @ %client.getPing();
+		%output = %output @ "\t" @ %client.clanPrefix @ "\t" @ %client.clanSuffix @ "\t" @ %client.score @ "\t" @ %client.getRawIP();
 		if(%i != %count-1)
 			%output = %output @ "|";
 	}
-	$asm::com::server[$asm::com::serverNumber].send(%output @ "\n");
+	$asm::com::server[$asm::com::serverNumber].send("PLAYERS" SPC %output @ "\n");
 	$sendClientList = schedule(5000,0,sendClientList);
 }
 

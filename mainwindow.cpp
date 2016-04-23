@@ -79,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->addonsNone, SIGNAL(clicked(bool)), this, SLOT(noAddons()));
     connect(ui->addonsDefault, SIGNAL(clicked(bool)), this, SLOT(defaultAddons()));
     connect(ui->addonsReload, SIGNAL(clicked(bool)), this, SLOT(loadAddonList()));
+    ui->chatBox->hide();
+    connect(ui->onlySeeChat, SIGNAL(clicked(bool)), this, SLOT(changeOutput(bool)));
 
     //Initialize Addon List Model
     addonListModel = new QStandardItemModel;
