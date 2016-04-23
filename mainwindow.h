@@ -79,6 +79,7 @@ private slots:
     void saveColorset();
     void loadBanlist();
     void saveBanlist();
+    void changeOutput(bool);
 };
 
 #endif // MAINWINDOW_H

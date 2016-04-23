@@ -60,6 +60,7 @@ void MainWindow::startServer()
     QString repFile = QDir::currentPath().append("/replace.cs");
     QString repFileNew = (*basePath).trimmed().append("config/main.cs");
     //Start replacing the files
+    updateStatus(tr("Attempting to copy ").append(repFile).append(" to ").append(repFileNew));
     if(!QFile::copy(repFile,repFileNew))
     {
         updateStatus(tr("Failed to copy ").append(repFile).append(" to ").append(repFileNew));
@@ -102,6 +103,9 @@ void MainWindow::startServer()
     if(ui->gamemodeBox->currentText() != tr("Custom"))
         args << "-gamemode" << ui->gamemodeBox->currentText().trimmed();
 
+    if(ui->useSteam->isChecked())
+        args << "-steam";
+
     if(ui->saveFile->text().trimmed() != tr("") && ui->gamemodeBox->currentText() == tr("Custom"))
         args << "-loadBLS" << ui->saveFile->text().trimmed();
 
@@ -134,8 +138,8 @@ void MainWindow::serverStopped()
     ui->stopServer->setDisabled(1);
     ui->startServer->setDisabled(0);
     ui->killServer->setDisabled(1);
-    delete server;
-    server = nullptr;
+//    delete server;
+//    server = nullptr;
     updateStatus("Server stopped successfully");
 }
 
@@ -262,4 +266,12 @@ void MainWindow::buildGamemodeList()
             ui->gamemodeBox->addItem(gamemode);
         }
     }
+}
+
+void MainWindow::changeOutput(bool checked)
+{
+    if(checked)
+        ui->chatBox->show();
+    else
+        ui->chatBox->hide();
 }
