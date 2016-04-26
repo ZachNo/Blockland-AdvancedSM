@@ -19,6 +19,8 @@ function initASMCom()
 
 function asmCom::onConnectRequest(%this, %address, %socket)
 {
+	if(%address !$= $asm::com::serverIP)
+		return;
 	%server = new TCPObject(asmComInput,%socket)
 	{
 		address = %address;
