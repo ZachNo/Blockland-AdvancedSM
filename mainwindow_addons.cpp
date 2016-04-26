@@ -129,7 +129,7 @@ void MainWindow::defaultAddons()
                  << "Light_Animated" << "Light_Basic"
                  << "Particle_Basic" << "Particle_FX_Cans" << "Particle_Grass" << "Particle_Player" << "Particle_Tools"
                  << "Player_Fuel_Jet" << "Player_Jump_Jet" << "Player_Leap_Jet" << "Player_No_Jet" << "Player_Quake"
-                 << "Print_1x2f_BLPRemote" << "Print_1x2f_Default" << "Print_2x2f_Default" << "Print_2x2r_Default" << "Print_Letters_Default"
+                 << "Print_1x2f_BLPRemote" << "Print_2x2r_Monitor3" << "Print_1x2f_Default" << "Print_2x2f_Default" << "Print_2x2r_Default" << "Print_Letters_Default"
                  << "Projectile_GravityRocket" << "Projectile_Pinball" << "Projectile_Pong" << "Projectile_Radio_Wave"
                  << "Sound_Beeps" << "Sound_Phone" << "Sound_Synth4"
                  << "Support_Doors"

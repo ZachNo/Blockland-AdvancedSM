@@ -23,7 +23,7 @@ bool ABMDatabase::initDatabase()
                    "IP1 TEXT,"
                    "PRIMARY KEY(BLID))")
     )
-    return false;
+        return false;
 
     return true;
 }

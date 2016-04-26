@@ -116,6 +116,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->refreshBanlist, SIGNAL(clicked(bool)), this, SLOT(loadBanlist()));
     connect(ui->saveBanlist, SIGNAL(clicked(bool)), this, SLOT(saveBanlist()));
 
+    //Flagged items category
+    flaggedListModel = new QStandardItemModel;
+    ui->flaggedItemsView->setModel(flaggedListModel);
+    flaggedListModel->setHorizontalHeaderLabels(QStringList() << tr("Add-on Name") << tr("Reason"));
+    ui->flaggedItemsView->verticalHeader()->hide();
+    ui->flaggedItemsView->horizontalHeader()->setStretchLastSection(true);
+    ui->flaggedItemsView->setColumnWidth(0,400);
+    connect(ui->scanForIssues, SIGNAL(clicked(bool)), this, SLOT(scanForFlagged()));
+
     //Try to load config file
     loadSettings();
 

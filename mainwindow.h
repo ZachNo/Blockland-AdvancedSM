@@ -10,6 +10,7 @@
 #include <QDirIterator>
 #include <QColor>
 #include <QByteArray>
+#include <QCryptographicHash>
 #include <quazip.h>
 #include <quazipfile.h>
 
@@ -39,8 +40,9 @@ private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
     QStandardItemModel *addonListModel;
-    QStandardItemModel *colorsetModel;
     QStandardItemModel *banlistModel;
+    QStandardItemModel *colorsetModel;
+    QStandardItemModel *flaggedListModel;
     ServerConnection *connection;
     LogWindow *logW;
     AboutWindow *aboutW;
@@ -80,6 +82,7 @@ private slots:
     void loadBanlist();
     void saveBanlist();
     void changeOutput(bool);
+    void scanForFlagged();
 };
 
 #endif // MAINWINDOW_H
