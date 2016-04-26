@@ -22,6 +22,7 @@ void MainWindow::basePathBuild()
     loadAddonList();
     loadColorset();
     loadBanlist();
+    loadMusicList();
 }
 
 //Open file browser for save files

@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     mainwindow_colorset.cpp \
     mainwindow_banlist.cpp \
     mainwindow_players.cpp \
-    mainwindow_flagged.cpp
+    mainwindow_flagged.cpp \
+    mainwindow_music.cpp
 
 HEADERS  += mainwindow.h \
     currentPlayers.h \

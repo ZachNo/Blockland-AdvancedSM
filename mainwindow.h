@@ -10,7 +10,6 @@
 #include <QDirIterator>
 #include <QColor>
 #include <QByteArray>
-#include <QCryptographicHash>
 #include <quazip.h>
 #include <quazipfile.h>
 
@@ -35,6 +34,8 @@ public:
     void updatePlayers(QString input);
     Ui::MainWindow *getUI()
     {return ui;}
+    void setApp(QApplication *a)
+    {app = a;}
 
 private:
     Ui::MainWindow *ui;
@@ -43,6 +44,7 @@ private:
     QStandardItemModel *banlistModel;
     QStandardItemModel *colorsetModel;
     QStandardItemModel *flaggedListModel;
+    QStandardItemModel *musicListModel;
     ServerConnection *connection;
     LogWindow *logW;
     AboutWindow *aboutW;
@@ -51,6 +53,7 @@ private:
     QShortcut *keyPress;
     QProcess *server;
     QString *basePath;
+    QApplication *app;
     bool serverStarting;
     void clearPlayerList();
     void addPlayer(QString name, QString blid, QString ping);
@@ -65,6 +68,7 @@ private slots:
     void openAbout();
     void openBLExec();
     void openSavefile();
+
     void startServer();
     void stopServer();
     void killServer();
@@ -72,17 +76,30 @@ private slots:
     void processError(QProcess::ProcessError err);
     void updateOutput();
     void sendCommand();
+
     void saveAddonList();
     void allAddons();
     void noAddons();
     void defaultAddons();
     void loadAddonList();
+
+    void saveMusicList();
+    void allMusic();
+    void noMusic();
+    void defaultMusic();
+    void loadMusicList();
+
     void loadColorset();
     void saveColorset();
+
     void loadBanlist();
     void saveBanlist();
+
     void changeOutput(bool);
+
     void scanForFlagged();
+
+    void setTheme();
 };
 
 #endif // MAINWINDOW_H

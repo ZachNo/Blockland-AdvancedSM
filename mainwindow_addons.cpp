@@ -27,7 +27,8 @@ void MainWindow::loadAddonList()
         if(line.trimmed() == tr(""))
             break;
         //delete $AddOn__ and end ;
-        line = line.remove(line.length()-1,1).remove(0,8);
+        line = line.remove(0,8);
+        line.chop(1);
 
         //See if it should have a check mark or not
         bool checked;
@@ -117,26 +118,26 @@ void MainWindow::noAddons()
 //Set only default addons
 void MainWindow::defaultAddons()
 {
+    QStringList defaults; //Make a list of all the default add-ons...
+    defaults << "Bot_Blockhead" << "Bot_Hole" << "Bot_Horse" << "Bot_Shark" << "Bot_Zombie"
+             << "Brick_Arch" << "Brick_Checkpoint" << "Brick_Christmas_Tree" << "Brick_Doors" << "Brick_Halloween" << "Brick_Large_Cubes"
+                << "Brick_Teledoor" << "Brick_Treasure_Chest" << "Brick_V15"
+             << "Emote_Alarm" << "Emote_Confusion" << "Emote_Hate" << "Emote_Love"
+             << "Item_Key" << "Item_Skis" << "Item_Sports"
+             << "Light_Animated" << "Light_Basic"
+             << "Particle_Basic" << "Particle_FX_Cans" << "Particle_Grass" << "Particle_Player" << "Particle_Tools"
+             << "Player_Fuel_Jet" << "Player_Jump_Jet" << "Player_Leap_Jet" << "Player_No_Jet" << "Player_Quake"
+             << "Print_1x2f_BLPRemote" << "Print_2x2r_Monitor3" << "Print_1x2f_Default" << "Print_2x2f_Default" << "Print_2x2r_Default" << "Print_Letters_Default"
+             << "Projectile_GravityRocket" << "Projectile_Pinball" << "Projectile_Pong" << "Projectile_Radio_Wave"
+             << "Sound_Beeps" << "Sound_Phone" << "Sound_Synth4"
+             << "Support_Doors"
+             << "Vehicle_Ball" << "Vehicle_Flying_Wheeled_Jeep" << "Vehicle_Horse" << "Vehicle_Jeep" << "Vehicle_Magic_Carpet"
+                << "Vehicle_Pirate_Cannon" << "Vehicle_Rowboat" << "Vehicle_Tank"
+             << "Weapon_Bow" << "Weapon_Gun" << "Weapon_Guns_Akimbo" << "Weapon_Horse_Ray" << "Weapon_Push_Broom"
+                << "Weapon_Rocket_Launcher" << "Weapon_Spear" << "Weapon_Sword";
     for(int i = 0; i < addonListModel->rowCount(); ++i)
     {
         QString txt = addonListModel->item(i)->text();
-        QStringList defaults; //Make a list of all the default add-ons...
-        defaults << "Bot_Blockhead" << "Bot_Hole" << "Bot_Horse" << "Bot_Shark" << "Bot_Zombie"
-                 << "Brick_Arch" << "Brick_Checkpoint" << "Brick_Christmas_Tree" << "Brick_Doors" << "Brick_Halloween" << "Brick_Large_Cubes"
-                    << "Brick_Teledoor" << "Brick_Treasure_Chest" << "Brick_V15"
-                 << "Emote_Alarm" << "Emote_Confusion" << "Emote_Hate" << "Emote_Love"
-                 << "Item_Key" << "Item_Skis" << "Item_Sports"
-                 << "Light_Animated" << "Light_Basic"
-                 << "Particle_Basic" << "Particle_FX_Cans" << "Particle_Grass" << "Particle_Player" << "Particle_Tools"
-                 << "Player_Fuel_Jet" << "Player_Jump_Jet" << "Player_Leap_Jet" << "Player_No_Jet" << "Player_Quake"
-                 << "Print_1x2f_BLPRemote" << "Print_2x2r_Monitor3" << "Print_1x2f_Default" << "Print_2x2f_Default" << "Print_2x2r_Default" << "Print_Letters_Default"
-                 << "Projectile_GravityRocket" << "Projectile_Pinball" << "Projectile_Pong" << "Projectile_Radio_Wave"
-                 << "Sound_Beeps" << "Sound_Phone" << "Sound_Synth4"
-                 << "Support_Doors"
-                 << "Vehicle_Ball" << "Vehicle_Flying_Wheeled_Jeep" << "Vehicle_Horse" << "Vehicle_Jeep" << "Vehicle_Magic_Carpet"
-                    << "Vehicle_Pirate_Cannon" << "Vehicle_Rowboat" << "Vehicle_Tank"
-                 << "Weapon_Bow" << "Weapon_Gun" << "Weapon_Guns_Akimbo" << "Weapon_Horse_Ray" << "Weapon_Push_Broom"
-                    << "Weapon_Rocket_Launcher" << "Weapon_Spear" << "Weapon_Sword";
         if(defaults.contains(txt))
             addonListModel->item(i)->setCheckState(Qt::Checked);
         else
