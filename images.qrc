@@ -14,5 +14,6 @@
         <file>user_delete.png</file>
         <file>help.png</file>
         <file>checkerboard.png</file>
+        <file>music.png</file>
     </qresource>
 </RCC>

@@ -74,17 +74,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     keyPress = new QShortcut(QKeySequence(Qt::Key_Return), this);
     connect(keyPress, SIGNAL(activated()), this, SLOT(sendCommand()));
     connect(ui->sendCommand, SIGNAL(clicked(bool)), this, SLOT(sendCommand()));
-    connect(ui->addonsSave, SIGNAL(clicked(bool)), this, SLOT(saveAddonList()));
-    connect(ui->addonsAll, SIGNAL(clicked(bool)), this, SLOT(allAddons()));
-    connect(ui->addonsNone, SIGNAL(clicked(bool)), this, SLOT(noAddons()));
-    connect(ui->addonsDefault, SIGNAL(clicked(bool)), this, SLOT(defaultAddons()));
-    connect(ui->addonsReload, SIGNAL(clicked(bool)), this, SLOT(loadAddonList()));
     ui->chatBox->hide();
     connect(ui->onlySeeChat, SIGNAL(clicked(bool)), this, SLOT(changeOutput(bool)));
 
     //Initialize Addon List Model
     addonListModel = new QStandardItemModel;
     ui->addonsView->setModel(addonListModel);
+    connect(ui->addonsSave, SIGNAL(clicked(bool)), this, SLOT(saveAddonList()));
+    connect(ui->addonsAll, SIGNAL(clicked(bool)), this, SLOT(allAddons()));
+    connect(ui->addonsNone, SIGNAL(clicked(bool)), this, SLOT(noAddons()));
+    connect(ui->addonsDefault, SIGNAL(clicked(bool)), this, SLOT(defaultAddons()));
+    connect(ui->addonsReload, SIGNAL(clicked(bool)), this, SLOT(loadAddonList()));
+
+    //Initialize Music list model
+    musicListModel = new QStandardItemModel;
+    ui->musicView->setModel(musicListModel);
+    connect(ui->musicSave, SIGNAL(clicked(bool)), this, SLOT(saveMusicList()));
+    connect(ui->musicAll, SIGNAL(clicked(bool)), this, SLOT(allMusic()));
+    connect(ui->musicNone, SIGNAL(clicked(bool)), this, SLOT(noMusic()));
+    connect(ui->musicDefault, SIGNAL(clicked(bool)), this, SLOT(defaultMusic()));
+    connect(ui->musicReload, SIGNAL(clicked(bool)), this, SLOT(loadMusicList()));
 
     //Colorset
     colorsetModel = new QStandardItemModel;
@@ -124,6 +133,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->flaggedItemsView->horizontalHeader()->setStretchLastSection(true);
     ui->flaggedItemsView->setColumnWidth(0,400);
     connect(ui->scanForIssues, SIGNAL(clicked(bool)), this, SLOT(scanForFlagged()));
+
+    //Load possible window styles
+    QStringList styles = QStyleFactory::keys();
+    for(int i = 0; i < styles.size(); ++i)
+        ui->themePicker->addItem(styles[i]);
+    connect(ui->themePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(setTheme()));
 
     //Try to load config file
     loadSettings();
@@ -283,3 +298,8 @@ bool MainWindow::loadSettings()
     return true;
 }
 
+void MainWindow::setTheme()
+{
+    this->app->setStyle(QStyleFactory::create(ui->themePicker->currentText()));
+    updateStatus("Window Theme set");
+}
