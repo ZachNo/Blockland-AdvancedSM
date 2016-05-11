@@ -134,6 +134,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->flaggedItemsView->setColumnWidth(0,400);
     connect(ui->scanForIssues, SIGNAL(clicked(bool)), this, SLOT(scanForFlagged()));
 
+    //Server prefs list
+    prefListModel = new QStandardItemModel;
+    ui->prefListView->setModel(prefListModel);
+    prefListModel->setHorizontalHeaderLabels(QStringList() << tr("Variable Name") << tr("Value"));
+    ui->prefListView->verticalHeader()->hide();
+    ui->prefListView->horizontalHeader()->setStretchLastSection(true);
+    ui->prefListView->setColumnWidth(0,300);
+    connect(ui->savePrefsBtn, SIGNAL(clicked(bool)), this, SLOT(savePrefList()));
+
+    //Setup admin list
+    adminListModel = new QStandardItemModel;
+    superAdminListModel = new QStandardItemModel;
+    ui->adminList->setModel(adminListModel);
+    ui->superAdminList->setModel(superAdminListModel);
+
     //Load possible window styles
     QStringList styles = QStyleFactory::keys();
     for(int i = 0; i < styles.size(); ++i)
@@ -158,14 +173,20 @@ MainWindow::~MainWindow()
     delete ui;
     delete model;
     delete addonListModel;
+    delete banlistModel;
+    delete colorsetModel;
+    delete flaggedListModel;
+    delete musicListModel;
+    delete prefListModel;
+    delete adminListModel;
+    delete superAdminListModel;
     delete connection;
     delete logW;
+    delete aboutW;
     delete db;
     delete keyPress;
+    delete server;
     delete basePath;
-    delete aboutW;
-    delete colorsetModel;
-    delete banlistModel;
     //delete logText; deleting causes crash on exit
 }
 
