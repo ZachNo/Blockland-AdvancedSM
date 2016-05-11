@@ -155,6 +155,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->themePicker->addItem(styles[i]);
     connect(ui->themePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(setTheme()));
 
+    //Link Zeblote fix to function
+    connect(ui->zebloteFix, SIGNAL(toggled(bool)), this, SLOT(applyZebloteFix(bool)));
+
     //Try to load config file
     loadSettings();
 
@@ -323,4 +326,52 @@ void MainWindow::setTheme()
 {
     this->app->setStyle(QStyleFactory::create(ui->themePicker->currentText()));
     updateStatus("Window Theme set");
+}
+
+void MainWindow::applyZebloteFix(bool enabled)
+{
+    if(!QFile::exists(ui->blExec->text().trimmed()))
+        return;
+    QFile executable(ui->blExec->text().trimmed());
+    if(!executable.open(QIODevice::ReadWrite))
+    {
+        updateStatus("Unable to open Blockland.exe to apply fix!");
+        return;
+    }
+    if(!executable.seek(0x00098B72))
+    {
+        updateStatus("Error: Unable to seek to 0x00098B72!");
+        return;
+    }
+    QDataStream stream(&executable);
+    if(enabled)
+    {
+        stream << 0x90010000;
+        stream << 0xB9900100;
+    }
+    else
+    {
+        stream << 0xC2010000;
+        stream << 0xB9C20100;
+    }
+
+    if(!executable.seek(0x0009A183))
+    {
+        updateStatus("Error: Unable to seek to 0x0009A183!");
+        return;
+    }
+    stream.setDevice(&executable);
+    if(enabled)
+    {
+        stream << 0xBA010000;
+        stream << 0x00908BC1;
+    }
+    else
+    {
+        stream << 0x8B1514CC;
+        stream << 0x70008BC1;
+    }
+
+    executable.close();
+    updateStatus("Successfully edited Blockland.exe with crash fix!");
 }

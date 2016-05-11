@@ -34,6 +34,8 @@ void ServerConnection::onMessageReceived()
     QString stringData(data);
     if(stringData.startsWith("PLAYERS "))
         main->updatePlayers(stringData.remove("PLAYERS "));
+    if(stringData.startsWith("MESSAGE "))
+        main->addMessage(stringData.remove("MESSAGE "));
     return;
 }
 
