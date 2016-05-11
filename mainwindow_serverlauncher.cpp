@@ -277,3 +277,8 @@ void MainWindow::changeOutput(bool checked)
     else
         ui->chatBox->hide();
 }
+
+void MainWindow::addMessage(QString message)
+{
+    ui->chatBox->append(message.trimmed());
+}

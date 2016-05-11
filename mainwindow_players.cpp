@@ -6,6 +6,9 @@ void MainWindow::updatePlayers(QString input)
     //Clear list first
     model->removeRows(0, model->rowCount());
 
+    if(input.trimmed() == tr(""))
+        return;
+
     QStringList players = input.split('|');
 
     //Loop through file

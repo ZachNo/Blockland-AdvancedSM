@@ -36,6 +36,7 @@ public:
     {return ui;}
     void setApp(QApplication *a)
     {app = a;}
+    void addMessage(QString message);
 
 private:
     Ui::MainWindow *ui;
@@ -67,6 +68,7 @@ private:
     bool loadSettings();
     void updateSAList(QString val);
     void updateAList(QString val);
+    void parseColorsetLine(QString line, int &row, int &col);
 
 private slots:
     void openLog();
@@ -108,6 +110,8 @@ private slots:
 
     void loadPrefList();
     void savePrefList();
+
+    void applyZebloteFix(bool enabled);
 };
 
 #endif // MAINWINDOW_H

@@ -22,6 +22,40 @@ QColor getColor(QString line)
     return color;
 }
 
+void MainWindow::parseColorsetLine(QString line, int &row, int &column)
+{
+    if(line.contains("DIV:"))
+    {
+        QStandardItem *item = new QStandardItem();
+        item->setToolTip(line);
+        item->setSelectable(false);
+        item->setEditable(false);
+        ui->colorSetTable->setColumnWidth(column, 36);
+        ui->colorSetTable->setRowHeight(row, 36);
+        colorsetModel->setItem(row, column, item);
+        ++column;
+        row = -1;
+    }
+    else
+    {
+        QStandardItem *item = new QStandardItem();
+        QImage image(":/checkerboard.png");
+        QPainter painter(&image);
+        QColor actualColor = getColor(line);
+        painter.fillRect(0,0,38,38,QBrush(actualColor));
+        item->setToolTip(tr(" ").prepend(QString::number(actualColor.red()))
+                         .append(QString::number(actualColor.green())).append(" ")
+                         .append(QString::number(actualColor.blue())).append(" ")
+                         .append(QString::number(actualColor.alpha())));
+        item->setBackground(QBrush(image));
+        item->setSelectable(false);
+        item->setEditable(false);
+        colorsetModel->setItem(row, column, item);
+        ui->colorSetTable->setRowHeight(row, 36);
+    }
+    ++row;
+}
+
 void MainWindow::loadColorset()
 {
     static bool firstLoad = true;
@@ -78,36 +112,7 @@ void MainWindow::loadColorset()
                 if(line == tr(""))
                     continue;
 
-                if(line.contains("DIV:"))
-                {
-                    QStandardItem *item = new QStandardItem();
-                    item->setToolTip(line);
-                    item->setSelectable(false);
-                    item->setEditable(false);
-                    ui->colorSetTable->setColumnWidth(column, 36);
-                    ui->colorSetTable->setRowHeight(row, 36);
-                    colorsetModel->setItem(row, column, item);
-                    ++column;
-                    row = -1;
-                }
-                else
-                {
-                    QStandardItem *item = new QStandardItem();
-                    QImage image(":/checkerboard.png");
-                    QPainter painter(&image);
-                    QColor actualColor = getColor(line);
-                    painter.fillRect(0,0,38,38,QBrush(actualColor));
-                    item->setToolTip(tr(" ").prepend(QString::number(actualColor.red()))
-                                      .append(QString::number(actualColor.green())).append(" ")
-                                      .append(QString::number(actualColor.blue())).append(" ")
-                                      .append(QString::number(actualColor.alpha())));
-                    item->setBackground(QBrush(image));
-                    item->setSelectable(false);
-                    item->setEditable(false);
-                    colorsetModel->setItem(row, column, item);
-                    ui->colorSetTable->setRowHeight(row, 36);
-                }
-                ++row;
+                parseColorsetLine(line, row, column);
             }
             colorsetFile.close();
             infile.close();
@@ -137,36 +142,7 @@ void MainWindow::loadColorset()
         if(line == tr(""))
             continue;
 
-        if(line.contains("DIV:"))
-        {
-            QStandardItem *item = new QStandardItem();
-            item->setToolTip(line);
-            item->setSelectable(false);
-            item->setEditable(false);
-            ui->colorSetTable->setColumnWidth(column, 36);
-            ui->colorSetTable->setRowHeight(row, 36);
-            colorsetModel->setItem(row, column, item);
-            ++column;
-            row = -1;
-        }
-        else
-        {
-            QStandardItem *item = new QStandardItem();
-            QImage image(":/checkerboard.png");
-            QPainter painter(&image);
-            QColor actualColor = getColor(line);
-            painter.fillRect(0,0,38,38,QBrush(actualColor));
-            item->setToolTip(tr(" ").prepend(QString::number(actualColor.red()))
-                             .append(QString::number(actualColor.green())).append(" ")
-                             .append(QString::number(actualColor.blue())).append(" ")
-                             .append(QString::number(actualColor.alpha())));
-            item->setBackground(QBrush(image));
-            item->setSelectable(false);
-            item->setEditable(false);
-            colorsetModel->setItem(row, column, item);
-            ui->colorSetTable->setRowHeight(row, 36);
-        }
-        ++row;
+        parseColorsetLine(line, row, column);
     }
 
     color.close();
