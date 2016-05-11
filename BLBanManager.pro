@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     mainwindow_banlist.cpp \
     mainwindow_players.cpp \
     mainwindow_flagged.cpp \
-    mainwindow_music.cpp
+    mainwindow_music.cpp \
+    mainwindow_prefs.cpp \
+    mainwindow_admin.cpp
 
 HEADERS  += mainwindow.h \
     currentPlayers.h \

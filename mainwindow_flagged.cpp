@@ -75,6 +75,9 @@ void MainWindow::scanForFlagged()
 
     //Iterate through add-ons and get gamemodes
     QDirIterator iter(addonPath, QDir::Files | QDir::Dirs);
+    QDir count(addonPath);
+    unsigned numOfFiles = count.count();
+    unsigned iterNum = 0;
     unsigned i = 0;
     while (iter.hasNext())
     {
@@ -106,6 +109,8 @@ void MainWindow::scanForFlagged()
             flaggedListModel->setItem(i, 1, item);
             ++i;
         }
+        ++iterNum;
+        ui->scanProgress->setValue(100 * iterNum / numOfFiles);
     }
     updateStatus("Finished scanning");
 }

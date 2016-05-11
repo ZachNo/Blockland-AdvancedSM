@@ -45,6 +45,9 @@ private:
     QStandardItemModel *colorsetModel;
     QStandardItemModel *flaggedListModel;
     QStandardItemModel *musicListModel;
+    QStandardItemModel *prefListModel;
+    QStandardItemModel *adminListModel;
+    QStandardItemModel *superAdminListModel;
     ServerConnection *connection;
     LogWindow *logW;
     AboutWindow *aboutW;
@@ -62,6 +65,8 @@ private:
     void basePathBuild();
     bool saveSettings();
     bool loadSettings();
+    void updateSAList(QString val);
+    void updateAList(QString val);
 
 private slots:
     void openLog();
@@ -100,6 +105,9 @@ private slots:
     void scanForFlagged();
 
     void setTheme();
+
+    void loadPrefList();
+    void savePrefList();
 };
 
 #endif // MAINWINDOW_H

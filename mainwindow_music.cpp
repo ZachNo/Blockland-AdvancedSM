@@ -1,7 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <unordered_map>
+#include <string>
 
-//Load ADD_ON_LIST and create list view from it.
+//Similar to Blockland's getSafeVariableName
+QString getVarName(QString name)
+{
+    name.replace("-", "DASH");
+    name.replace(" ", "_");
+    name.remove(QRegExp("[`~!@#$%^&*()+=|:;<>«»,.?/{}\'\"\\[\\]\\\\]"));
+    return name;
+}
+
+//Load music list and create list view from it.
 void MainWindow::loadMusicList()
 {
     //Clear list first
@@ -19,6 +30,15 @@ void MainWindow::loadMusicList()
         return;
     }
 
+    //make hashtable for all files we have
+    std::unordered_map<std::string, int> music;
+    QDirIterator iter(musicPath, QDir::Files);
+    while (iter.hasNext())
+    {
+        iter.next();
+        music.emplace(getVarName(iter.fileName().remove(".ogg").trimmed()).toStdString(), 0);
+    }
+
     //Loop through file
     while(!add.atEnd())
     {
@@ -29,7 +49,6 @@ void MainWindow::loadMusicList()
         //delete $Music__ and end ;
         line = line.remove(0,8);
         line.chop(1);
-        line.replace("DASH","-");
 
         //See if it should have a check mark or not
         bool checked;
@@ -44,7 +63,7 @@ void MainWindow::loadMusicList()
         line = line.remove(firstSpace,line.length() - firstSpace);
 
         //If add-on isn't in Add-ons folder, ignore value for it
-        if(!QFile::exists(musicPath.trimmed().append(line).append(".ogg")))
+        if(music.find(line.toStdString()) == music.end())
             continue;
 
         //Make item and add it to list
@@ -86,6 +105,7 @@ void MainWindow::saveMusicList()
     {
         //Assemble line text
         QString line = tr("$Music__").append(musicListModel->item(i)->text()).append(" = ");
+        line.replace("-","DASH");
 
         //Get checked state
         if(musicListModel->item(i)->checkState() == Qt::Checked)
