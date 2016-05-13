@@ -19,5 +19,9 @@ Feel free to fork, push, pull, whatever. Development may slow down now that scho
 
 ### Licenses
 zlib uses the zlib license
+
 QuaZip uses LGPL 2 or later
+
 This application uses LGPL 3
+
+Qt uses LGPL 3
