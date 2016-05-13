@@ -58,9 +58,15 @@ void MainWindow::loadPrefList()
 
         //Get special prefs
         if(var == "$Pref::Server::AutoSuperAdminList")
+        {
             updateSAList(val);
+            superAdminListIndex = i;
+        }
         else if(var == "$Pref::Server::AutoAdminList")
+        {
             updateAList(val);
+            adminListIndex = i;
+        }
 
         //Make item and add it to list
         PrefItem *item = new PrefItem();

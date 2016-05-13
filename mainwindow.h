@@ -62,6 +62,8 @@ private:
     QString *basePath;
     QApplication *app;
 
+    int adminListIndex;
+    int superAdminListIndex;
     bool lastSelectedSAorA;
 
     bool serverStarting;
@@ -113,6 +115,10 @@ private slots:
     void removeAdmin();
     void adminFocused();
     void sAdminFocused();
+    void addAdmin();
+    void addSuperAdmin();
+    void demoteSA();
+    void rebuildAdminList();
 
     void changeOutput(bool);
 
