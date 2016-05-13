@@ -156,9 +156,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->adminList->setModel(adminListModel);
     ui->superAdminList->setModel(superAdminListModel);
     lastSelectedSAorA = false;
+    adminListIndex = -1;
+    superAdminListIndex = -1;
     connect(ui->removeAdminBtn, SIGNAL(clicked(bool)), this, SLOT(removeAdmin()));
     connect(ui->adminList, SIGNAL(clicked(QModelIndex)), this, SLOT(adminFocused()));
     connect(ui->superAdminList, SIGNAL(clicked(QModelIndex)), this, SLOT(sAdminFocused()));
+    connect(ui->addAdminBtn, SIGNAL(clicked(bool)), this, SLOT(addAdmin()));
+    connect(ui->addSABtn, SIGNAL(clicked(bool)), this, SLOT(addSuperAdmin()));
+    connect(ui->demoteSABtn, SIGNAL(clicked(bool)), this, SLOT(demoteSA()));
+    connect(ui->saveAdminsBtn, SIGNAL(clicked(bool)), this, SLOT(savePrefList()));
 
     //Load possible window styles
     QStringList styles = QStyleFactory::keys();

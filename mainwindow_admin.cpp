@@ -61,4 +61,46 @@ void MainWindow::removeAdmin()
         superAdminListModel->removeRow(ui->superAdminList->currentIndex().row());
     else
         adminListModel->removeRow(ui->adminList->currentIndex().row());
+    rebuildAdminList();
+}
+
+void MainWindow::addAdmin()
+{
+    QStandardItem *item = new QStandardItem();
+    item->setText(ui->adminBLID->text());
+    adminListModel->appendRow(item);
+    ui->adminBLID->clear();
+    rebuildAdminList();
+}
+
+void MainWindow::addSuperAdmin()
+{
+    QStandardItem *item = new QStandardItem();
+    item->setText(ui->adminBLID->text());
+    superAdminListModel->appendRow(item);
+    ui->adminBLID->clear();
+    rebuildAdminList();
+}
+
+void MainWindow::demoteSA()
+{
+    QStandardItem *item = new QStandardItem();
+    item->setText(superAdminListModel->item(ui->superAdminList->currentIndex().row())->text());
+    adminListModel->appendRow(item);
+    superAdminListModel->removeRow(ui->superAdminList->currentIndex().row());
+    rebuildAdminList();
+}
+
+void MainWindow::rebuildAdminList()
+{
+    QString adminList = "\"";
+    QString superAdminList = "\"";
+    for(int i = 0; i < adminListModel->rowCount(); ++i)
+        adminList.append(" ").append(adminListModel->item(i)->text());
+    for(int i = 0; i < superAdminListModel->rowCount(); ++i)
+        superAdminList.append(" ").append(superAdminListModel->item(i)->text());
+    adminList.append("\"");
+    superAdminList.append("\"");
+    prefListModel->item(adminListIndex, 1)->setText(adminList);
+    prefListModel->item(superAdminListIndex, 1)->setText(superAdminList);
 }
