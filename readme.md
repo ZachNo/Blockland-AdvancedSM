@@ -16,3 +16,8 @@ Change which add-ons will load in the Custom gamemode, who has admin, who is ban
 
 ### About contributing
 Feel free to fork, push, pull, whatever. Development may slow down now that school has started back up.
+
+### Licenses
+zlib uses the zlib license
+QuaZip uses LGPL 2 or later
+This application uses LGPL 3
