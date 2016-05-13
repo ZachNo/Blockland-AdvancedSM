@@ -8,6 +8,10 @@ void MainWindow::updateSAList(QString val)
     superAdminListModel->clear();
 
     val = val.remove("\"").trimmed();
+
+    if(val == tr(""))
+        return;
+
     QStringList blids = val.split(" ");
     for(int i = 0; i < blids.size(); ++i)
     {
@@ -26,6 +30,10 @@ void MainWindow::updateAList(QString val)
     adminListModel->clear();
 
     val = val.remove("\"").trimmed();
+
+    if(val == tr(""))
+        return;
+
     QStringList blids = val.split(" ");
     for(int i = 0; i < blids.size(); ++i)
     {
@@ -35,4 +43,22 @@ void MainWindow::updateAList(QString val)
     }
 
     updateStatus("Admin list successfully imported!");
+}
+
+void MainWindow::adminFocused()
+{
+    lastSelectedSAorA = false;
+}
+
+void MainWindow::sAdminFocused()
+{
+    lastSelectedSAorA = true;
+}
+
+void MainWindow::removeAdmin()
+{
+    if(lastSelectedSAorA)
+        superAdminListModel->removeRow(ui->superAdminList->currentIndex().row());
+    else
+        adminListModel->removeRow(ui->adminList->currentIndex().row());
 }

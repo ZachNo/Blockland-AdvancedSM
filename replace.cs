@@ -40,6 +40,13 @@ function asmComInput::onLine(%this,%line)
 function sendClientList()
 {
 	cancel($sendClientList);
+	
+	if(!$asm::com::server)
+	{
+		$sendClientList = schedule(5000,0,sendClientList);
+		return;
+	}
+	
 	%count = ClientGroup.getCount();
 		
 	for(%i=0;%i<%count;%i++)
@@ -65,7 +72,6 @@ package BlocklandASM
 {
 	function serverCmdMessageSent(%client, %message)
 	{
-		echo("Client said something");
 		parent::serverCmdMessageSent(%client, %message);
 		%output = %client.getSimpleName() @ ":" SPC %message;
 		$asm::com::server.send("MESSAGE" SPC %output @ "\n");
