@@ -99,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     colorsetModel = new QStandardItemModel;
     ui->colorSetTable->setModel(colorsetModel);
     connect(ui->setColorset, SIGNAL(clicked(bool)), this, SLOT(saveColorset()));
+    connect(ui->allColorsets, SIGNAL(currentIndexChanged(int)), this, SLOT(loadColorset()));
 
     //Banlist
     banlistModel = new QStandardItemModel;
@@ -178,9 +179,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     //Try to load config file
     loadSettings();
-
-    //If I do it before, it stack overflows
-    connect(ui->allColorsets, SIGNAL(currentIndexChanged(int)), this, SLOT(loadColorset()));
 }
 
 //MainWindow destructor

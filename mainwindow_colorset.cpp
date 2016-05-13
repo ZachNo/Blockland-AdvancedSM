@@ -57,13 +57,42 @@ void MainWindow::parseColorsetLine(QString line, int &row, int &column)
 }
 
 void MainWindow::loadColorset()
-{
+{    
     static bool firstLoad = true;
+    QString addonPath = (*basePath).trimmed().append("Add-ons/");
+
+    if(firstLoad)
+    {
+        //It will trigger it again if we leave it connected
+        ui->allColorsets->disconnect();
+
+        //Remove all previous gamemodes...
+        ui->allColorsets->clear();
+        ui->allColorsets->addItem("Current colorset");
+
+        //Iterate through add-ons and get gamemodes
+        QDirIterator iter(addonPath, QDir::Files | QDir::Dirs);
+        while (iter.hasNext())
+        {
+            iter.next();
+            if(iter.fileName().toLower().contains("colorset_"))
+            {
+                QString colorset = iter.fileName().remove(0,9); //remove colorset_
+                if(iter.fileInfo().isFile())
+                    colorset = colorset.remove(colorset.length()-4,4); //remove .zip
+                ui->allColorsets->addItem(colorset);
+            }
+        }
+
+        //Reconnect because we're done changing stuff
+        connect(ui->allColorsets, SIGNAL(currentIndexChanged(int)), this, SLOT(loadColorset()));
+        firstLoad = false;
+    }
+
     //Clear list first
     colorsetModel->clear();
 
     QString path;
-    QString addonPath = (*basePath).trimmed().append("Add-ons/");
 
     //If we are loading the first set, or selecting the server colorset, just load the config file
     if(firstLoad || ui->allColorsets->currentIndex() == 0)
@@ -147,27 +176,6 @@ void MainWindow::loadColorset()
 
     color.close();
 
-    if(firstLoad)
-    {
-        //Remove all previous gamemodes...
-        ui->allColorsets->clear();
-        ui->allColorsets->addItem("Current colorset");
-
-        //Iterate through add-ons and get gamemodes
-        QDirIterator iter(addonPath, QDir::Files | QDir::Dirs);
-        while (iter.hasNext())
-        {
-            iter.next();
-            if(iter.fileName().toLower().contains("colorset_"))
-            {
-                QString colorset = iter.fileName().remove(0,9); //remove colorset_
-                if(iter.fileInfo().isFile())
-                    colorset = colorset.remove(colorset.length()-4,4); //remove .zip
-                ui->allColorsets->addItem(colorset);
-            }
-        }
-        firstLoad = false;
-    }
     updateStatus("Colorset successfully imported!");
 }
 
