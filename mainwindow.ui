@@ -394,7 +394,7 @@
         <x>645</x>
         <y>295</y>
         <width>150</width>
-        <height>115</height>
+        <height>140</height>
        </rect>
       </property>
       <property name="title">
@@ -406,7 +406,7 @@
          <x>5</x>
          <y>20</y>
          <width>140</width>
-         <height>30</height>
+         <height>40</height>
         </rect>
        </property>
        <property name="text">
@@ -420,9 +420,9 @@
        <property name="geometry">
         <rect>
          <x>5</x>
-         <y>55</y>
+         <y>65</y>
          <width>140</width>
-         <height>30</height>
+         <height>40</height>
         </rect>
        </property>
        <property name="text">
@@ -436,13 +436,13 @@
        <property name="geometry">
         <rect>
          <x>5</x>
-         <y>90</y>
+         <y>110</y>
          <width>140</width>
-         <height>20</height>
+         <height>25</height>
         </rect>
        </property>
        <property name="text">
-        <string>Kill</string>
+        <string>Force Kill Server</string>
        </property>
       </widget>
      </widget>
