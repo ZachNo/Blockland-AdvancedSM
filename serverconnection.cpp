@@ -41,8 +41,16 @@ void ServerConnection::onMessageReceived()
 
 void ServerConnection::reconnect()
 {
+    int port = tcp->peerPort();
     tcp->abort();
-    tcp->connectToHost(QHostAddress::LocalHost, 5123);
+    tcp->connectToHost(QHostAddress::LocalHost, port);
+    main->updateStatus("Attempting reconnection with local Blockland Server.");
+}
+
+void ServerConnection::reconnect(int port)
+{
+    tcp->abort();
+    tcp->connectToHost(QHostAddress::LocalHost, port);
     main->updateStatus("Attempting reconnection with local Blockland Server.");
 }
 

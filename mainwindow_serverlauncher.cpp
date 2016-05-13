@@ -210,9 +210,11 @@ void MainWindow::updateOutput()
     }
 
     //Trigger that our stuff is done executing
-    if(serverStarting && output.contains("--------- End Executing Custom Code ---------"))
+    if(serverStarting && output.startsWith("ASM PORT: "))
     {
-        connection->reconnect();
+        QString parse = output;
+        parse.remove("ASM PORT: ").remove("\r\n").trimmed();
+        connection->reconnect(parse.toInt());
         cleanFiles();
         serverStarting = false;
     }

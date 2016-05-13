@@ -16,6 +16,7 @@ public:
     bool isConnected();
 public slots:
     void reconnect();
+    void reconnect(int port);
 private slots:
     void onMessageReceived();
     void onConnected();

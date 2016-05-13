@@ -6,14 +6,17 @@
 echo("--------- Executing Custom Code ---------");
 
 //Stuff to open listening server
-$asm::com::serverPort = 5123;
+$asm::com::serverPort = -1;
 $asm::com::serverIP = "127.0.0.1";
 $asm::com::serverNumber = 0;
 $asm::com::server = 0;
 
+//Only initialize after server is started!
 function initASMCom()
 {
 	new TCPObject(asmCom);
+	$asm::com::serverPort = $Server::Port + 1000;
+	echo("ASM PORT:" SPC $asm::com::serverPort);
 	asmCom.listen($asm::com::serverPort);
 	sendClientList();
 }
@@ -92,7 +95,7 @@ function fastPacketFixLoop(%bool)
 
 fastPacketFixLoop(true);
 
-initASMCom();
+schedule(10,0,initASMCom);
 
 echo("--------- End Executing Custom Code ---------");
 

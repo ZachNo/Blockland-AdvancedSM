@@ -173,7 +173,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->themePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(setTheme()));
 
     //Link Zeblote fix to function
-    connect(ui->zebloteFix, SIGNAL(toggled(bool)), this, SLOT(applyZebloteFix(bool)));
+    connect(ui->zebloteFix, SIGNAL(clicked(bool)), this, SLOT(applyZebloteFix()));
+    connect(ui->disableZebloteFix, SIGNAL(clicked(bool)), this, SLOT(applyZebloteFix()));
 
     //Try to load config file
     loadSettings();
@@ -269,6 +270,10 @@ bool MainWindow::saveSettings()
     //Export server var fields
     exportTxt = tr("ServerSettings ").append(ui->maxPlayers->text()).append(" ").append(ui->portNumber->text()).append(" ");
     if(ui->lanDed->isChecked())
+        exportTxt.append("1 ");
+    else
+        exportTxt.append("0 ");
+    if(ui->useSteam->isChecked())
         exportTxt.append("1\r\n");
     else
         exportTxt.append("0\r\n");
@@ -330,6 +335,7 @@ bool MainWindow::loadSettings()
     ui->maxPlayers->setValue(importTxt.section(' ',1,1).toInt());
     ui->portNumber->setValue(importTxt.section(' ',2,2).toInt());
     ui->lanDed->setChecked(importTxt.section(' ',3,3).toInt());
+    ui->useSteam->setChecked(importTxt.section(' ',4,4).toInt());
 
     //import server name
     importTxt = load.readLine();
@@ -349,8 +355,23 @@ void MainWindow::setTheme()
     updateStatus("Window Theme set");
 }
 
-void MainWindow::applyZebloteFix(bool enabled)
+void MainWindow::applyZebloteFix()
 {
+    bool enabled = false;
+    if(ui->zebloteFix->isEnabled())
+    {
+        enabled = true;
+        ui->zebloteFix->setEnabled(false);
+        ui->disableZebloteFix->setEnabled(true);
+    }
+    else
+    {
+        enabled = false;
+        ui->zebloteFix->setEnabled(true);
+        ui->disableZebloteFix->setEnabled(false);
+    }
+
+
     if(!QFile::exists(ui->blExec->text().trimmed()))
         return;
     QFile executable(ui->blExec->text().trimmed());
@@ -394,5 +415,8 @@ void MainWindow::applyZebloteFix(bool enabled)
     }
 
     executable.close();
-    updateStatus("Successfully edited Blockland.exe with crash fix!");
+    if(enabled)
+        updateStatus("Successfully edited Blockland.exe with crash fix!");
+    else
+        updateStatus("Successfully edited Blockland.exe to original!");
 }

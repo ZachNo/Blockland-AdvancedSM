@@ -130,7 +130,7 @@ private slots:
     void savePrefList();
     void toggleAdvancedPref(bool onOff);
 
-    void applyZebloteFix(bool enabled);
+    void applyZebloteFix();
 };
 
 class PrefItem : public QObject, public QStandardItem
