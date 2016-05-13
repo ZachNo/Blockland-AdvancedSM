@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //db = new ABMDatabase(logText);
     //db->initDatabase();
 
-    //Connect buttons to functions
+    //Connect server buttons to functions
     connect(ui->searchExec, SIGNAL(clicked(bool)), this, SLOT(openBLExec()));
     connect(ui->saveFileBrowse, SIGNAL(clicked(bool)), this, SLOT(openSavefile()));
     connect(ui->startServer, SIGNAL(clicked(bool)), this, SLOT(startServer()));
@@ -124,6 +124,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->banlistTable->setColumnWidth(7,125);
     connect(ui->refreshBanlist, SIGNAL(clicked(bool)), this, SLOT(loadBanlist()));
     connect(ui->saveBanlist, SIGNAL(clicked(bool)), this, SLOT(saveBanlist()));
+    connect(ui->removeBanBtn, SIGNAL(clicked(bool)), this, SLOT(removeBan()));
+    connect(ui->addBanBtn, SIGNAL(clicked(bool)), this, SLOT(addBan()));
+    addBanW = new AddbanWindow(this);
+    addBanW->setWindowFlags(Qt::Tool);
+    addBanW->hide();
 
     //Flagged items category
     flaggedListModel = new QStandardItemModel;
@@ -142,12 +147,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->prefListView->horizontalHeader()->setStretchLastSection(true);
     ui->prefListView->setColumnWidth(0,300);
     connect(ui->savePrefsBtn, SIGNAL(clicked(bool)), this, SLOT(savePrefList()));
+    connect(ui->advancedPrefs, SIGNAL(toggled(bool)), this, SLOT(toggleAdvancedPref(bool)));
+    ui->prefListView->hide();
 
     //Setup admin list
     adminListModel = new QStandardItemModel;
     superAdminListModel = new QStandardItemModel;
     ui->adminList->setModel(adminListModel);
     ui->superAdminList->setModel(superAdminListModel);
+    lastSelectedSAorA = false;
+    connect(ui->removeAdminBtn, SIGNAL(clicked(bool)), this, SLOT(removeAdmin()));
+    connect(ui->adminList, SIGNAL(clicked(QModelIndex)), this, SLOT(adminFocused()));
+    connect(ui->superAdminList, SIGNAL(clicked(QModelIndex)), this, SLOT(sAdminFocused()));
 
     //Load possible window styles
     QStringList styles = QStyleFactory::keys();
@@ -171,9 +182,11 @@ MainWindow::~MainWindow()
     saveSettings();
 
     if(server && server->state() != QProcess::NotRunning)
+    {
         server->kill();
+        server->waitForFinished();
+    }
 
-    delete ui;
     delete model;
     delete addonListModel;
     delete banlistModel;
@@ -185,12 +198,14 @@ MainWindow::~MainWindow()
     delete superAdminListModel;
     delete connection;
     delete logW;
+    delete addBanW;
     delete aboutW;
-    delete db;
+    //delete db;
     delete keyPress;
     delete server;
     delete basePath;
     //delete logText; deleting causes crash on exit
+    delete ui;
 }
 
 //Open log window

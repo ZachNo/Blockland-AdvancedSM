@@ -17,6 +17,7 @@
 #include "log.h"
 #include "database.h"
 #include "about.h"
+#include "addban.h"
 
 namespace Ui
 {
@@ -37,6 +38,7 @@ public:
     void setApp(QApplication *a)
     {app = a;}
     void addMessage(QString message);
+    void addRealBan(QString blid, QString time, QString reason);
 
 private:
     Ui::MainWindow *ui;
@@ -52,12 +54,16 @@ private:
     ServerConnection *connection;
     LogWindow *logW;
     AboutWindow *aboutW;
+    AddbanWindow *addBanW;
     QString *logText;
     ABMDatabase *db;
     QShortcut *keyPress;
     QProcess *server;
     QString *basePath;
     QApplication *app;
+
+    bool lastSelectedSAorA;
+
     bool serverStarting;
     void clearPlayerList();
     void addPlayer(QString name, QString blid, QString ping);
@@ -101,6 +107,12 @@ private slots:
 
     void loadBanlist();
     void saveBanlist();
+    void removeBan();
+    void addBan();
+
+    void removeAdmin();
+    void adminFocused();
+    void sAdminFocused();
 
     void changeOutput(bool);
 
@@ -110,8 +122,20 @@ private slots:
 
     void loadPrefList();
     void savePrefList();
+    void toggleAdvancedPref(bool onOff);
 
     void applyZebloteFix(bool enabled);
+};
+
+class PrefItem : public QObject, public QStandardItem
+{
+    Q_OBJECT
+public:
+    PrefItem(){}
+    ~PrefItem(){}
+public slots:
+    void updateText(QString text);
+    void updateText(bool tf);
 };
 
 #endif // MAINWINDOW_H

@@ -23,14 +23,16 @@ SOURCES += main.cpp\
     mainwindow_flagged.cpp \
     mainwindow_music.cpp \
     mainwindow_prefs.cpp \
-    mainwindow_admin.cpp
+    mainwindow_admin.cpp \
+    addban.cpp
 
 HEADERS  += mainwindow.h \
     currentPlayers.h \
     log.h \
     database.h \
     serverconnection.h \
-    about.h
+    about.h \
+    addban.h
 
 FORMS    += mainwindow.ui
 RESOURCES += images.qrc \

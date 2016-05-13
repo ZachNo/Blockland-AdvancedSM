@@ -51,3 +51,7 @@ void ServerConnection::sendCommand(QString command)
     tcp->write(command.append("\n").toStdString().c_str());
 }
 
+bool ServerConnection::isConnected()
+{
+    return tcp->isOpen();
+}

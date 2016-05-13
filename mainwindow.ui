@@ -519,6 +519,9 @@
           <height>400</height>
          </rect>
         </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
        </widget>
        <widget class="QPushButton" name="addonsDefault">
         <property name="geometry">
@@ -628,6 +631,9 @@
           <width>650</width>
           <height>400</height>
          </rect>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QPushButton" name="musicDefault">
@@ -872,6 +878,9 @@
           <height>400</height>
          </rect>
         </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
        </widget>
        <widget class="QPushButton" name="saveBanlist">
         <property name="geometry">
@@ -883,7 +892,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Save and Apply</string>
         </property>
        </widget>
        <widget class="Line" name="line_5">
@@ -916,13 +925,26 @@
         <property name="geometry">
          <rect>
           <x>670</x>
-          <y>260</y>
+          <y>210</y>
           <width>120</width>
           <height>40</height>
          </rect>
         </property>
         <property name="text">
          <string>Add Ban</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="removeBanBtn">
+        <property name="geometry">
+         <rect>
+          <x>670</x>
+          <y>260</y>
+          <width>120</width>
+          <height>40</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Remove Ban</string>
         </property>
        </widget>
       </widget>
@@ -935,6 +957,9 @@
         <string>Configuration</string>
        </attribute>
        <widget class="QTableView" name="prefListView">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>5</x>
@@ -942,6 +967,9 @@
           <width>650</width>
           <height>400</height>
          </rect>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="Line" name="line_8">
@@ -967,9 +995,619 @@
          </rect>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Save and Apply</string>
         </property>
        </widget>
+       <widget class="QCheckBox" name="advancedPrefs">
+        <property name="geometry">
+         <rect>
+          <x>675</x>
+          <y>340</y>
+          <width>110</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Advanced mode</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>5</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Server Name</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="pref_serverName">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>200</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>45</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Max players</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="pref_maxPlayers">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>50</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>1</number>
+        </property>
+        <property name="displayIntegerBase">
+         <number>10</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>85</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Join Password</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="pref_joinPass">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>150</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_9">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>125</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Admin Password</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="pref_APass">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>150</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_10">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>165</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Super Admin Password</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="pref_SAPass">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>180</y>
+          <width>150</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_11">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>205</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Brick Limit</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="pref_brickLimit">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>220</y>
+          <width>100</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="wrapping">
+         <bool>false</bool>
+        </property>
+        <property name="maximum">
+         <number>1048576</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_12">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>245</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Max Bricks/Second</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="pref_mbs">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>260</y>
+          <width>75</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="value">
+         <number>20</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>285</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Too-Far Distance</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="pref_tooFar">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>300</y>
+          <width>100</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="maximum">
+         <number>100000</number>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_14">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>325</y>
+          <width>150</width>
+          <height>13</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Max Chat Length</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="pref_chatLen">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>340</y>
+          <width>50</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+        <property name="value">
+         <number>120</number>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="pref_randColor">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>365</y>
+          <width>150</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Random Brick Color</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="pref_tardFilter">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>385</y>
+          <width>150</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>E-Tard Filter</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="pref_fallDamage">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>385</y>
+          <width>100</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Falling Damage</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_9">
+        <property name="geometry">
+         <rect>
+          <x>215</x>
+          <y>10</y>
+          <width>10</width>
+          <height>390</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_12">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>10</y>
+          <width>200</width>
+          <height>195</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Per-Player Limits</string>
+        </property>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>75</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Schedules</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pSchedules">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>15</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_16">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>45</y>
+           <width>75</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Misc</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pMisc">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>40</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pProjectiles">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>65</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pItems">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>90</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pLights">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>115</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pBots">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>140</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_pVehicles">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>165</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_17">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>75</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Projectiles</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_18">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>95</y>
+           <width>75</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Items</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>120</y>
+           <width>80</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Lights / Emitters</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_20">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>145</y>
+           <width>75</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Players / Bots</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_21">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>170</y>
+           <width>80</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Physics Vehicles</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_13">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>210</y>
+          <width>200</width>
+          <height>70</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Global Limits</string>
+        </property>
+        <widget class="QLabel" name="label_22">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>80</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Physics Vehicles</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_gVehicles">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>15</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>20</number>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_23">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>45</y>
+           <width>80</width>
+           <height>13</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Players / Bots</string>
+         </property>
+        </widget>
+        <widget class="QSpinBox" name="pref_gBots">
+         <property name="geometry">
+          <rect>
+           <x>95</x>
+           <y>40</y>
+           <width>100</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+       </widget>
+       <widget class="Line" name="line_10">
+        <property name="geometry">
+         <rect>
+          <x>435</x>
+          <y>10</y>
+          <width>10</width>
+          <height>390</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+       <zorder>line_8</zorder>
+       <zorder>savePrefsBtn</zorder>
+       <zorder>advancedPrefs</zorder>
+       <zorder>label_6</zorder>
+       <zorder>pref_serverName</zorder>
+       <zorder>label_7</zorder>
+       <zorder>pref_maxPlayers</zorder>
+       <zorder>label_8</zorder>
+       <zorder>pref_joinPass</zorder>
+       <zorder>label_9</zorder>
+       <zorder>pref_APass</zorder>
+       <zorder>label_10</zorder>
+       <zorder>pref_SAPass</zorder>
+       <zorder>label_11</zorder>
+       <zorder>pref_brickLimit</zorder>
+       <zorder>label_12</zorder>
+       <zorder>pref_mbs</zorder>
+       <zorder>label_13</zorder>
+       <zorder>pref_tooFar</zorder>
+       <zorder>label_14</zorder>
+       <zorder>pref_chatLen</zorder>
+       <zorder>pref_randColor</zorder>
+       <zorder>pref_tardFilter</zorder>
+       <zorder>pref_fallDamage</zorder>
+       <zorder>line_9</zorder>
+       <zorder>groupBox_12</zorder>
+       <zorder>groupBox_13</zorder>
+       <zorder>line_10</zorder>
+       <zorder>prefListView</zorder>
       </widget>
       <widget class="QWidget" name="tab_colorset">
        <attribute name="icon">
@@ -1391,9 +2029,9 @@
      <widget class="QGroupBox" name="groupBox_11">
       <property name="geometry">
        <rect>
-        <x>5</x>
-        <y>75</y>
-        <width>150</width>
+        <x>310</x>
+        <y>130</y>
+        <width>481</width>
         <height>50</height>
        </rect>
       </property>
@@ -1405,13 +2043,13 @@
         <rect>
          <x>10</x>
          <y>15</y>
-         <width>130</width>
+         <width>400</width>
          <height>30</height>
         </rect>
        </property>
        <property name="text">
-        <string>Enable Zeblote's
-runtime fix</string>
+        <string>Enable Zeblote's runtime fix (Blockland has to be closed)
+WARNING: Will break Blockland.exe if Blockland was updated!</string>
        </property>
       </widget>
      </widget>

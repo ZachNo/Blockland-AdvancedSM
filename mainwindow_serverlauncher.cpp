@@ -238,7 +238,7 @@ void MainWindow::updateOutput()
 //Write command data to stdin
 void MainWindow::sendCommand()
 {
-    if(ui->commandLine->text().trimmed() == tr(""))
+    if(ui->commandLine->text().trimmed() == tr("") || !connection->isConnected())
         return;
     connection->sendCommand(ui->commandLine->text().trimmed());
     ui->commandLine->clear();

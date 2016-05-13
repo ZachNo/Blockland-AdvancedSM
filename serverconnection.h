@@ -13,6 +13,7 @@ public:
     ServerConnection(MainWindow *m);
     ~ServerConnection();
     void sendCommand(QString command);
+    bool isConnected();
 public slots:
     void reconnect();
 private slots:

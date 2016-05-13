@@ -73,5 +73,28 @@ void MainWindow::saveBanlist()
     }
     ban.close();
 
+    if(connection->isConnected())
+        connection->sendCommand("BanManagerSO.loadBans();");
+
     updateStatus("Banlist successfully saved!");
+}
+
+void MainWindow::removeBan()
+{
+    banlistModel->removeRow(ui->banlistTable->currentIndex().row());
+}
+
+void MainWindow::addBan()
+{
+    addBanW->show();
+}
+
+void MainWindow::addRealBan(QString blid, QString time, QString reason)
+{
+    if(!connection->isConnected())
+        return;
+    QString com = "banBLID(";
+    com.append(blid).append(",").append(time).append(",").append(reason).append(");");
+    connection->sendCommand(com);
+    QTimer::singleShot(1000, this, SLOT(loadBanlist()));
 }
