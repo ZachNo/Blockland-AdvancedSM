@@ -52,7 +52,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="tabBarAutoHide">
      <bool>false</bool>
@@ -500,7 +500,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_addons">
        <attribute name="icon">
@@ -2064,18 +2064,34 @@
       <property name="title">
        <string>Fixes</string>
       </property>
-      <widget class="QRadioButton" name="zebloteFix">
+      <widget class="QPushButton" name="zebloteFix">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>15</y>
-         <width>400</width>
+         <width>311</width>
          <height>30</height>
         </rect>
        </property>
        <property name="text">
         <string>Enable Zeblote's runtime fix (Blockland has to be closed)
 WARNING: Will break Blockland.exe if Blockland was updated!</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="disableZebloteFix">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>325</x>
+         <y>15</y>
+         <width>150</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Disable Zeblote Fix</string>
        </property>
       </widget>
      </widget>
