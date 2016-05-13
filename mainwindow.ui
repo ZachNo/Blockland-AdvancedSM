@@ -29,8 +29,8 @@
    <string>Blockland: Advanced Server Manager</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../../Documents/Pictures/backgrounds/profile_16.png</normaloff>../../../Documents/Pictures/backgrounds/profile_16.png</iconset>
+   <iconset resource="images.qrc">
+    <normaloff>:/brickIcon.ico</normaloff>:/brickIcon.ico</iconset>
   </property>
   <property name="statusTip">
    <string/>
