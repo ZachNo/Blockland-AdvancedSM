@@ -37,3 +37,5 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 RESOURCES += images.qrc \
     images.qrc
+
+win32:RC_ICONS += brickIcon.ico

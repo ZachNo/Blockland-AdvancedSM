@@ -16,5 +16,6 @@
         <file>checkerboard.png</file>
         <file>music.png</file>
         <file>brick.png</file>
+        <file>brickIcon.ico</file>
     </qresource>
 </RCC>
