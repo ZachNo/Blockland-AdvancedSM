@@ -230,7 +230,7 @@ void MainWindow::savePrefList()
     add.close();
 
     if(connection->isConnected())
-        connection->sendCommand("exec(\"config/server/prefs.cs\");");
+        connection->sendCommand("exec(\"config/server/prefs.cs\");WebCom_PostServer();");
 
     updateStatus("Pref list successfully saved!");
 }

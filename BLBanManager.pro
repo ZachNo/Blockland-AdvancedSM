@@ -1,4 +1,4 @@
-QT       += core gui network widgets sql
+QT       += core gui network widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,9 +10,7 @@ LIBS += quazip.lib
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    currentPlayers.cpp \
     log.cpp \
-    database.cpp \
     serverconnection.cpp \
     about.cpp \
     mainwindow_addons.cpp \
@@ -27,9 +25,7 @@ SOURCES += main.cpp\
     addban.cpp
 
 HEADERS  += mainwindow.h \
-    currentPlayers.h \
     log.h \
-    database.h \
     serverconnection.h \
     about.h \
     addban.h

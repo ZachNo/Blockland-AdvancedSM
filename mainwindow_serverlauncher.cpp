@@ -61,12 +61,45 @@ void MainWindow::startServer()
     //Make file path of our file and where to put it
     QString repFile = QDir::currentPath().append("/replace.cs");
     QString repFileNew = (*basePath).trimmed().append("config/main.cs");
+    QString backup = (*basePath).trimmed().append("config/main_backup.cs");
+    QString origFile = "";
+    if(QFile::exists(repFileNew))
+    {
+        QFile origIO(repFileNew);
+        origIO.open(QIODevice::ReadOnly);
+        origFile.append(origIO.readAll());
+        origIO.close();
+
+        if(QFile::exists(backup) && !QFile::remove(backup))
+        {
+            updateStatus(tr("Failed to remove ").append(backup));
+            return;
+        }
+        if(!QFile::copy(repFileNew,backup))
+        {
+            updateStatus(tr("Failed to copy ").append(repFileNew).append(" to ").append(backup));
+            return;
+        }
+        if(!QFile::remove(repFileNew))
+        {
+            updateStatus(tr("Failed to remove ").append(repFileNew));
+            return;
+        }
+    }
     //Start replacing the files
     updateStatus(tr("Attempting to copy ").append(repFile).append(" to ").append(repFileNew));
     if(!QFile::copy(repFile,repFileNew))
     {
         updateStatus(tr("Failed to copy ").append(repFile).append(" to ").append(repFileNew));
         return;
+    }
+
+    if(QFile::exists(backup))
+    {
+        QFile appending(repFileNew);
+        appending.open(QIODevice::Append);
+        appending.write(origFile.toStdString().c_str());
+        appending.close();
     }
 
     //Display and log messages
@@ -98,10 +131,11 @@ void MainWindow::startServer()
     args << "-port"
          << QString::number(ui->portNumber->value())
          << "-maxPlayers"
-         << QString::number(ui->maxPlayers->value())
-         << "-serverName"
-         << ui->serverName->text().trimmed()
-         << "-console";
+         << QString::number(ui->maxPlayers->value());
+
+    if(ui->serverName->text().trimmed() == tr(""))
+         args << "-serverName" << ui->serverName->text().trimmed();
+
     if(ui->gamemodeBox->currentText() != tr("Custom"))
         args << "-gamemode" << ui->gamemodeBox->currentText().trimmed();
 
@@ -165,6 +199,17 @@ void MainWindow::cleanFiles()
     //Start replacing the files
     if(!QFile::remove(repFile))
         updateStatus(tr("Failed to remove ").append(repFile));
+    QString orig = (*basePath).trimmed().append("config/main_backup.cs");
+    if(QFile::exists(orig))
+    {
+        if(!QFile::copy(orig,repFile))
+        {
+            updateStatus(tr("Failed to copy ").append(orig).append(" to ").append(repFile));
+            return;
+        }
+        if(!QFile::remove(orig))
+            updateStatus(tr("Failed to remove ").append(orig));
+    }
 }
 
 //Spits out error to statusbar is something went bad

@@ -44,6 +44,9 @@ AddbanWindow::~AddbanWindow()
 
 void AddbanWindow::callAddBan()
 {
-    mw->addRealBan(blid->text(), time->text(), reason->text());
     this->hide();
+    if(blid->text() == tr("") || time->text() == tr("") || reason->text() == tr(""))
+        return;
+
+    mw->addRealBan(blid->text(), time->text(), reason->text());
 }
