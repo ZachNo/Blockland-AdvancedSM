@@ -174,6 +174,29 @@ void MainWindow::serverStopped()
     ui->stopServer->setDisabled(1);
     ui->startServer->setDisabled(0);
     ui->killServer->setDisabled(1);
+
+    //Make sure main.cs is handled well!
+    QString orig = (*basePath).trimmed().append("config/main_backup.cs");
+    QString repFile = (*basePath).trimmed().append("config/main.cs");
+    if(QFile::exists(orig))
+    {
+        if(QFile::exists(repFile))
+        {
+            if(!QFile::remove(repFile))
+            {
+                updateStatus(tr("Failed to remove ").append(repFile));
+                return;
+            }
+        }
+        if(!QFile::copy(orig,repFile))
+        {
+            updateStatus(tr("Failed to copy ").append(orig).append(" to ").append(repFile));
+            return;
+        }
+        if(!QFile::remove(orig))
+            updateStatus(tr("Failed to remove ").append(orig));
+    }
+
 //    delete server;
 //    server = nullptr;
     updateStatus("Server stopped successfully");
