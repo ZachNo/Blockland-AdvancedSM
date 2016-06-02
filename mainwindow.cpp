@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->gamemodeBox->addItem("Select a Gamemode...");
 
     //Link SQLite Database
-    db = nullptr;
+    //db = nullptr;
     //db = new ABMDatabase(logText);
     //db->initDatabase();
 

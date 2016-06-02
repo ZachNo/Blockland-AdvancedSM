@@ -37,6 +37,7 @@ function asmCom::onConnectRequest(%this, %address, %socket)
 
 function asmComInput::onLine(%this,%line)
 {
+	echo(%line);
 	eval(%line);
 }
 
