@@ -6,6 +6,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QFont Font("Arial", 8);
+    a.setFont(Font);
     MainWindow mWindow;
     mWindow.setApp(&a);
     mWindow.show();

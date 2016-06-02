@@ -2006,7 +2006,7 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>Chat spam ban length (in seconds)</string>
+        <string>Chat spam ban length (in minutes)</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="lineEdit_2">
@@ -2019,7 +2019,7 @@
         </rect>
        </property>
        <property name="placeholderText">
-        <string>Build spam ban length (in seconds)</string>
+        <string>Build spam ban length (in minutes)</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="lineEdit_3">
@@ -2032,7 +2032,7 @@
         </rect>
        </property>
        <property name="placeholderText">
-        <string>Hammer/paint spam ban length (in seconds)</string>
+        <string>Hammer/paint spam ban length (in minutes)</string>
        </property>
       </widget>
       <widget class="QRadioButton" name="radioButton_9">

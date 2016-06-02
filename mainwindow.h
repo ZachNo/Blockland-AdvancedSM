@@ -15,7 +15,7 @@
 
 #include "serverconnection.h"
 #include "log.h"
-#include "database.h"
+//#include "database.h"
 #include "about.h"
 #include "addban.h"
 
@@ -56,7 +56,7 @@ private:
     AboutWindow *aboutW;
     AddbanWindow *addBanW;
     QString *logText;
-    ABMDatabase *db;
+//    ABMDatabase *db;
     QShortcut *keyPress;
     QProcess *server;
     QString *basePath;

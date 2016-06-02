@@ -134,7 +134,7 @@ void MainWindow::startServer()
          << QString::number(ui->maxPlayers->value());
 
     if(ui->serverName->text().trimmed() == tr(""))
-         args << "-serverName" << ui->serverName->text().trimmed();
+        args << "-serverName" << ui->serverName->text().trimmed();
 
     if(ui->gamemodeBox->currentText() != tr("Custom"))
         args << "-gamemode" << ui->gamemodeBox->currentText().trimmed();
@@ -143,7 +143,11 @@ void MainWindow::startServer()
         args << "-steam";
 
     if(ui->saveFile->text().trimmed() != tr("") && ui->gamemodeBox->currentText() == tr("Custom"))
-        args << "-loadBLS" << ui->saveFile->text().trimmed();
+    {
+        QString save = ui->saveFile->text().trimmed();
+        save.remove((*basePath).trimmed());
+        args << "-loadBLS" << save;
+    }
 
     //Start server process with everything
     server->start(ui->blExec->text().trimmed(), args);
