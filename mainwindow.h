@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
-#include <QtSql/QtSql>
+//#include <QtSql/QtSql>
 #include <QShortcut>
 #include <QProcess>
 #include <QFile>
