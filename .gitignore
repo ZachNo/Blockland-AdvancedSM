@@ -9,6 +9,7 @@
 *.so
 *.dll
 *.dylib
+*.obj
 
 # Qt-es
 
@@ -79,5 +80,5 @@ $RECYCLE.BIN/
 *.lnk
 
 #Ignore other things that don't matter
-BLBanManager/
+BLBanManager/*
 *.pro.user
