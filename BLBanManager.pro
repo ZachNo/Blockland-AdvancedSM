@@ -1,37 +1,45 @@
-QT       += core gui network widgets
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui network widgets sql widgets
 
 TARGET = BLBanManager
 TEMPLATE = app
 
-LIBS += quazip.lib
 
+SOURCES += \
+    src/about.cpp \
+    src/addban.cpp \
+    src/currentPlayers.cpp \
+    src/database.cpp \
+    src/log.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/mainwindow_addons.cpp \
+    src/mainwindow_admin.cpp \
+    src/mainwindow_banlist.cpp \
+    src/mainwindow_colorset.cpp \
+    src/mainwindow_flagged.cpp \
+    src/mainwindow_music.cpp \
+    src/mainwindow_players.cpp \
+    src/mainwindow_prefs.cpp \
+    src/mainwindow_serverlauncher.cpp \
+    src/serverconnection.cpp
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    log.cpp \
-    serverconnection.cpp \
-    about.cpp \
-    mainwindow_addons.cpp \
-    mainwindow_serverlauncher.cpp \
-    mainwindow_colorset.cpp \
-    mainwindow_banlist.cpp \
-    mainwindow_players.cpp \
-    mainwindow_flagged.cpp \
-    mainwindow_music.cpp \
-    mainwindow_prefs.cpp \
-    mainwindow_admin.cpp \
-    addban.cpp
+HEADERS  += \
+    src/about.h \
+    src/addban.h \
+    src/currentPlayers.h \
+    src/database.h \
+    src/log.h \
+    src/mainwindow.h \
+    src/serverconnection.h \
+    src/sleep.h
 
-HEADERS  += mainwindow.h \
-    log.h \
-    serverconnection.h \
-    about.h \
-    addban.h
+FORMS    += \
+    resources/mainwindow.ui
+RESOURCES += \
+    images/images.qrc
 
-FORMS    += mainwindow.ui
-RESOURCES += images.qrc \
-    images.qrc
+win32:RC_ICONS += images/brickIcon.ico
 
-win32:RC_ICONS += brickIcon.ico
+win32: LIBS += -lQt5Quazip1
+
+win32: LIBS += -lzlib

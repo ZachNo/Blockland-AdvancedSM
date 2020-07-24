@@ -29,7 +29,7 @@
    <string>Blockland: Advanced Server Manager</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="images.qrc">
+   <iconset resource="../images/images.qrc">
     <normaloff>:/brickIcon.ico</normaloff>:/brickIcon.ico</iconset>
   </property>
   <property name="statusTip">
@@ -59,7 +59,7 @@
     </property>
     <widget class="QWidget" name="tab_1">
      <attribute name="icon">
-      <iconset resource="images.qrc">
+      <iconset resource="../images/images.qrc">
        <normaloff>:/server.png</normaloff>:/server.png</iconset>
      </attribute>
      <attribute name="title">
@@ -164,7 +164,7 @@
         <x>645</x>
         <y>0</y>
         <width>150</width>
-        <height>225</height>
+        <height>255</height>
        </rect>
       </property>
       <property name="title">
@@ -351,12 +351,38 @@
         <string>Steam Authentication</string>
        </property>
       </widget>
+      <widget class="QLabel" name="label_24">
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>217</y>
+         <width>47</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>dToken</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="dtoken">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>5</x>
+         <y>230</y>
+         <width>140</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_3">
       <property name="geometry">
        <rect>
         <x>645</x>
-        <y>225</y>
+        <y>255</y>
         <width>150</width>
         <height>70</height>
        </rect>
@@ -392,9 +418,9 @@
       <property name="geometry">
        <rect>
         <x>645</x>
-        <y>295</y>
+        <y>325</y>
         <width>150</width>
-        <height>140</height>
+        <height>110</height>
        </rect>
       </property>
       <property name="title">
@@ -406,7 +432,7 @@
          <x>5</x>
          <y>20</y>
          <width>140</width>
-         <height>40</height>
+         <height>25</height>
         </rect>
        </property>
        <property name="text">
@@ -420,9 +446,9 @@
        <property name="geometry">
         <rect>
          <x>5</x>
-         <y>65</y>
+         <y>50</y>
          <width>140</width>
-         <height>40</height>
+         <height>25</height>
         </rect>
        </property>
        <property name="text">
@@ -436,7 +462,7 @@
        <property name="geometry">
         <rect>
          <x>5</x>
-         <y>110</y>
+         <y>80</y>
          <width>140</width>
          <height>25</height>
         </rect>
@@ -449,7 +475,7 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="icon">
-      <iconset resource="images.qrc">
+      <iconset resource="../images/images.qrc">
        <normaloff>:/user.png</normaloff>:/user.png</iconset>
      </attribute>
      <attribute name="title">
@@ -484,7 +510,7 @@
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="icon">
-      <iconset resource="images.qrc">
+      <iconset resource="../images/images.qrc">
        <normaloff>:/wrench.png</normaloff>:/wrench.png</iconset>
      </attribute>
      <attribute name="title">
@@ -504,7 +530,7 @@
       </property>
       <widget class="QWidget" name="tab_addons">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/bricks.png</normaloff>:/bricks.png</iconset>
        </attribute>
        <attribute name="title">
@@ -617,7 +643,7 @@
       </widget>
       <widget class="QWidget" name="tab_music">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/music.png</normaloff>:/music.png</iconset>
        </attribute>
        <attribute name="title">
@@ -730,7 +756,7 @@
       </widget>
       <widget class="QWidget" name="tab_admins">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/user_suit.png</normaloff>:/user_suit.png</iconset>
        </attribute>
        <attribute name="title">
@@ -889,7 +915,7 @@
       </widget>
       <widget class="QWidget" name="tab_banlist">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/user_delete.png</normaloff>:/user_delete.png</iconset>
        </attribute>
        <attribute name="title">
@@ -976,7 +1002,7 @@
       </widget>
       <widget class="QWidget" name="tab_config">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/book_open.png</normaloff>:/book_open.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1637,7 +1663,7 @@
       </widget>
       <widget class="QWidget" name="tab_colorset">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/color_wheel.png</normaloff>:/color_wheel.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1723,7 +1749,7 @@
       </widget>
       <widget class="QWidget" name="tab_flagged">
        <attribute name="icon">
-        <iconset resource="images.qrc">
+        <iconset resource="../images/images.qrc">
          <normaloff>:/flag_red.png</normaloff>:/flag_red.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1795,7 +1821,7 @@
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="icon">
-      <iconset resource="images.qrc">
+      <iconset resource="../images/images.qrc">
        <normaloff>:/plugin.png</normaloff>:/plugin.png</iconset>
      </attribute>
      <attribute name="title">
@@ -2052,53 +2078,10 @@
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_11">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>130</y>
-        <width>481</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Fixes</string>
-      </property>
-      <widget class="QPushButton" name="zebloteFix">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>15</y>
-         <width>311</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Enable Zeblote's runtime fix (Blockland has to be closed)
-WARNING: Will break Blockland.exe if Blockland was updated!</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="disableZebloteFix">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>325</x>
-         <y>15</y>
-         <width>150</width>
-         <height>30</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Disable Zeblote Fix</string>
-       </property>
-      </widget>
-     </widget>
     </widget>
     <widget class="QWidget" name="tab_6">
      <attribute name="icon">
-      <iconset resource="images.qrc">
+      <iconset resource="../images/images.qrc">
        <normaloff>:/brick.png</normaloff>:/brick.png</iconset>
      </attribute>
      <attribute name="title">
@@ -2161,7 +2144,7 @@ WARNING: Will break Blockland.exe if Blockland was updated!</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="images.qrc"/>
+  <include location="../images/images.qrc"/>
  </resources>
  <connections/>
 </ui>

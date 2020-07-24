@@ -76,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->sendCommand, SIGNAL(clicked(bool)), this, SLOT(sendCommand()));
     ui->chatBox->hide();
     connect(ui->onlySeeChat, SIGNAL(clicked(bool)), this, SLOT(changeOutput(bool)));
+    connect(ui->useSteam, SIGNAL(clicked(bool)), this, SLOT(useSteamOrToken(bool)));
 
     //Initialize Addon List Model
     addonListModel = new QStandardItemModel;
@@ -172,10 +173,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     for(int i = 0; i < styles.size(); ++i)
         ui->themePicker->addItem(styles[i]);
     connect(ui->themePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(setTheme()));
-
-    //Link Zeblote fix to function
-    connect(ui->zebloteFix, SIGNAL(clicked(bool)), this, SLOT(applyZebloteFix()));
-    connect(ui->disableZebloteFix, SIGNAL(clicked(bool)), this, SLOT(applyZebloteFix()));
 
     //Try to load config file
     loadSettings();
@@ -285,6 +282,10 @@ bool MainWindow::saveSettings()
     exportTxt = tr("ServerSave ").append(ui->saveFile->text()).append("\r\n");
     save.write(exportTxt.toStdString().c_str());
 
+    //Export dtoken
+    exportTxt = tr("dtoken ").append(ui->dtoken->text()).append("\r\n");
+    save.write(exportTxt.toStdString().c_str());
+
     save.close();
     return true;
 }
@@ -343,6 +344,10 @@ bool MainWindow::loadSettings()
     importTxt = load.readLine();
     ui->saveFile->setText(importTxt.remove("ServerSave ").trimmed());
 
+    //import dtoken
+    importTxt = load.readLine();
+    ui->dtoken->setText(importTxt.remove("dtoken ").trimmed());
+
     load.close();
     return true;
 }
@@ -351,70 +356,4 @@ void MainWindow::setTheme()
 {
     this->app->setStyle(QStyleFactory::create(ui->themePicker->currentText()));
     updateStatus("Window Theme set");
-}
-
-void MainWindow::applyZebloteFix()
-{
-    bool enabled = false;
-    if(ui->zebloteFix->isEnabled())
-    {
-        enabled = true;
-        ui->zebloteFix->setEnabled(false);
-        ui->disableZebloteFix->setEnabled(true);
-    }
-    else
-    {
-        enabled = false;
-        ui->zebloteFix->setEnabled(true);
-        ui->disableZebloteFix->setEnabled(false);
-    }
-
-
-    if(!QFile::exists(ui->blExec->text().trimmed()))
-        return;
-    QFile executable(ui->blExec->text().trimmed());
-    if(!executable.open(QIODevice::ReadWrite))
-    {
-        updateStatus("Unable to open Blockland.exe to apply fix!");
-        return;
-    }
-    if(!executable.seek(0x00098B72))
-    {
-        updateStatus("Error: Unable to seek to 0x00098B72!");
-        return;
-    }
-    QDataStream stream(&executable);
-    if(enabled)
-    {
-        stream << 0x90010000;
-        stream << 0xB9900100;
-    }
-    else
-    {
-        stream << 0xC2010000;
-        stream << 0xB9C20100;
-    }
-
-    if(!executable.seek(0x0009A183))
-    {
-        updateStatus("Error: Unable to seek to 0x0009A183!");
-        return;
-    }
-    stream.setDevice(&executable);
-    if(enabled)
-    {
-        stream << 0xBA010000;
-        stream << 0x00908BC1;
-    }
-    else
-    {
-        stream << 0x8B1514CC;
-        stream << 0x70008BC1;
-    }
-
-    executable.close();
-    if(enabled)
-        updateStatus("Successfully edited Blockland.exe with crash fix!");
-    else
-        updateStatus("Successfully edited Blockland.exe to original!");
 }

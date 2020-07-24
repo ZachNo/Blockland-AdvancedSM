@@ -141,6 +141,8 @@ void MainWindow::startServer()
 
     if(ui->useSteam->isChecked())
         args << "-steam";
+    else
+        args << "-dtoken" << ui->dtoken->text().trimmed();
 
     if(ui->saveFile->text().trimmed() != tr("") && ui->gamemodeBox->currentText() == tr("Custom"))
     {
@@ -282,11 +284,19 @@ void MainWindow::updateOutput()
     }
 
     //Trigger that our stuff is done executing
-    if(serverStarting && output.startsWith("ASM PORT: "))
+    if(serverStarting && output.contains("ASM PORT: "))
     {
-        QString parse = output;
-        parse.remove("ASM PORT: ").remove("\r\n").trimmed();
-        connection->reconnect(parse.toInt());
+        QTextStream parse(&output);
+        QString line;
+
+        while (parse.readLineInto(&line))
+        {
+            if(line.startsWith("ASM PORT: "))
+            {
+                line.remove("ASM PORT: ").remove("\r\n").trimmed();
+                connection->reconnect(line.toInt());
+            }
+        }
         cleanFiles();
         serverStarting = false;
     }
@@ -355,4 +365,9 @@ void MainWindow::changeOutput(bool checked)
 void MainWindow::addMessage(QString message)
 {
     ui->chatBox->append(message.trimmed());
+}
+
+void MainWindow::useSteamOrToken(bool steam)
+{
+    ui->dtoken->setEnabled(!steam);
 }

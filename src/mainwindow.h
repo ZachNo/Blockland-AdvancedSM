@@ -121,6 +121,7 @@ private slots:
     void rebuildAdminList();
 
     void changeOutput(bool);
+    void useSteamOrToken(bool);
 
     void scanForFlagged();
 
@@ -129,8 +130,6 @@ private slots:
     void loadPrefList();
     void savePrefList();
     void toggleAdvancedPref(bool onOff);
-
-    void applyZebloteFix();
 };
 
 class PrefItem : public QObject, public QStandardItem

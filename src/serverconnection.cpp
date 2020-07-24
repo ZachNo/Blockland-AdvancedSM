@@ -1,4 +1,4 @@
-#include "serverConnection.h"
+#include "serverconnection.h"
 #include "mainwindow.h"
 
 ServerConnection::ServerConnection(MainWindow *m)
@@ -24,7 +24,7 @@ void ServerConnection::onConnected()
 
 void ServerConnection::onError(QAbstractSocket::SocketError)
 {
-    main->updateStatus("Error while attemping connection to local Blockland server:\n | ");
+    main->updateStatus("Error while attemping connection to local Blockland server:");
     main->updateStatus(tcp->errorString());
 }
 
@@ -51,7 +51,7 @@ void ServerConnection::reconnect(int port)
 {
     tcp->abort();
     tcp->connectToHost(QHostAddress::LocalHost, port);
-    main->updateStatus("Attempting reconnection with local Blockland Server.");
+    main->updateStatus("Attempting reconnection with local Blockland Server on port " + QString::number(port));
 }
 
 void ServerConnection::sendCommand(QString command)
